@@ -17,7 +17,7 @@ public class TweetEntity {
 
     @Id
     private UUID id;
-    private String userId;
+    private UUID userId;
     private String avatar;
     private String title;
     private String message;

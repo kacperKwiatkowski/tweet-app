@@ -1,47 +1,60 @@
 package com.kacperKwiatkowski.tweetApp.controller;
 
+import com.kacperKwiatkowski.tweetApp.dto.TweetDto;
 import com.kacperKwiatkowski.tweetApp.service.TweetService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
-public class TweetController {
+class TweetController {
 
     private final TweetService tweetService;
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @GetMapping("/all")
-    void getAllTweets(){
-
+    List<TweetDto> getAllTweets() {
+        return tweetService.getAllTweets();
     }
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @GetMapping("/{username}")
-    void getAllTweetsByUsername(@PathVariable String username){
-
+    List<TweetDto> getAllTweetsByUsername(@PathVariable String username) {
+        return tweetService.getAllTweetsBuUsername(username);
     }
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @PostMapping("/{username}/add")
-    void postTweet(@PathVariable String username){
-
+    @ResponseStatus(HttpStatus.CREATED)
+    void saveTweet(@PathVariable String username) {
+        tweetService.saveTweet();
     }
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @PutMapping("/{username}/update/{id}")
-    void UpdateTweet(@PathVariable String username, @PathVariable String id){
-
+    TweetDto updateTweet(@PathVariable String username, @PathVariable String id) {
+        return tweetService.updateTweet();
     }
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @DeleteMapping("/{username}/delete/{id}")
-    void DeleteTweet(@PathVariable String username, @PathVariable String id){
-
+    void deleteTweet(@PathVariable String username, @PathVariable String id) {
+        tweetService.deleteTweet();
     }
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @GetMapping("/{username}/like/{id}")
-    void PutMapping(@PathVariable String username, @PathVariable String id){
-
+    TweetDto likeTweet(@PathVariable String username, @PathVariable String id) {
+        return tweetService.likeTweet();
     }
 
+    @PreAuthorize("hasAuthority('level:auth')")
     @PostMapping("/{username}/reply/{id}")
-    void ReplyToTweet(@PathVariable String username, @PathVariable String id){
-
+    TweetDto replyToTweet(@PathVariable String username, @PathVariable String id) {
+        return tweetService.replyToTweet();
     }
 }
