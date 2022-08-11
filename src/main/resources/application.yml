@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: /api/v.1.0/tweets
+
 spring:
 
   main:
@@ -14,11 +18,13 @@ spring:
       database: tweets
       port: 27017
       host: localhost
-    rest:
-      basePath: /api/v.1.0/tweets
 
   kafka:
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: "default"
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
