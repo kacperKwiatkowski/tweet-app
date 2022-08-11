@@ -1,0 +1,4 @@
+spring:
+  data:
+    rest:
+      basePath: /api/v.1.0/tweets
