@@ -28,3 +28,10 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+
+
+application:
+  jwt:
+    secret-key: securesecuresecuresecuresecuresecuresecure
+    token-prefix: Bearer
+    token-expiration-after-days: 14

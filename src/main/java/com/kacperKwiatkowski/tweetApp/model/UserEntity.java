@@ -1,5 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.model;
 
+import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,4 +22,5 @@ public class UserEntity {
     private String email;
     private String username;
     private String password;
+    private RoleType roleType;
 }
