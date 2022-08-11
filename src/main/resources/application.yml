@@ -1,4 +1,24 @@
 spring:
+
+  main:
+    banner-mode: off
+
+  application:
+    name: TWEET-SERVICE
+
   data:
+    mongodb:
+      authentication-database: admin
+      username: mongo_username
+      password: mongo_password
+      database: tweets
+      port: 27017
+      host: localhost
     rest:
       basePath: /api/v.1.0/tweets
+
+  kafka:
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: "default"

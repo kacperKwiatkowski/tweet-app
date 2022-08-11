@@ -1,9 +1,9 @@
-package com.kacperKwiatkowski.tweetApp.domain;
+package com.kacperKwiatkowski.tweetApp.model;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.UUID;
 
 @Builder
@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity
+@Document("users")
 public class UserEntity {
 
     @Id
