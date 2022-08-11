@@ -1,8 +1,7 @@
 package com.kacperKwiatkowski.tweetApp.security.role;
 
 public enum RoleAuthorities {
-    AUTHENTICATED("level:auth"),
-    BASIC("level:basic");
+    AUTHENTICATED("level:auth");
 
     private final String permission;
 

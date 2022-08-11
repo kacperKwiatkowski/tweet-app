@@ -34,12 +34,33 @@ public class TweetAppApplication {
             userRepository.save(
                     UserEntity.builder()
                             .id(UUID.randomUUID())
-                            .email("email")
-                            .username("username")
-                            .password(passwordEncoder.encode("password"))
+                            .email("email1")
+                            .username("username1")
+                            .password(passwordEncoder.encode("password1"))
                             .roleType(RoleType.USER)
                             .build()
             );
+
+            userRepository.save(
+                    UserEntity.builder()
+                            .id(UUID.randomUUID())
+                            .email("email3")
+                            .username("username3")
+                            .password(passwordEncoder.encode("password3"))
+                            .roleType(RoleType.USER)
+                            .build()
+            );
+
+            userRepository.save(
+                    UserEntity.builder()
+                            .id(UUID.randomUUID())
+                            .email("email2")
+                            .username("username2")
+                            .password(passwordEncoder.encode("password2"))
+                            .roleType(RoleType.USER)
+                            .build()
+            );
+
         };
     }
 }

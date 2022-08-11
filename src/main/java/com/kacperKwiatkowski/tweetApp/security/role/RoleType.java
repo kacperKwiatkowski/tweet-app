@@ -7,11 +7,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.kacperKwiatkowski.tweetApp.security.role.RoleAuthorities.AUTHENTICATED;
-import static com.kacperKwiatkowski.tweetApp.security.role.RoleAuthorities.BASIC;
 
 public enum RoleType {
-    USER(Sets.newHashSet(AUTHENTICATED)),
-    ADMIN(Sets.newHashSet(BASIC));
+    USER(Sets.newHashSet(AUTHENTICATED));
 
     private final Set<RoleAuthorities> permissions;
 
