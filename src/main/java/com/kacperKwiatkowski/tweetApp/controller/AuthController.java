@@ -15,11 +15,6 @@ public class AuthController {
 
     }
 
-    @GetMapping("/login")
-    void login(){
-
-    }
-
     @GetMapping("/{username}/forgot")
     void forgotPassword(@PathVariable String username){
 

@@ -13,4 +13,6 @@ public interface UserRepository extends MongoRepository<UserEntity, UUID> {
     UserEntity findUserEntityByUsername(String username);
 
     List<UserEntity> findAllByUsernameContaining(String username);
+
+    boolean existsByUsername(String username);
 }

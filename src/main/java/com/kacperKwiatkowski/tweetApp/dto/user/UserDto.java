@@ -1,4 +1,4 @@
-package com.kacperKwiatkowski.tweetApp.dto;
+package com.kacperKwiatkowski.tweetApp.dto.user;
 
 import lombok.*;
 

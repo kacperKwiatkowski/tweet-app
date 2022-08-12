@@ -1,6 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.service;
 
-import com.kacperKwiatkowski.tweetApp.dto.UserDto;
+import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.mapper.UserMapper;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +17,7 @@ public record UserService(
 
     public List<UserDto> getAllUsers() {
         log.info("Service 'UserService::getAllUsers' invoked.");
+
         return userRepository.findAll().stream()
                 .map(userMapper::toDto)
                 .toList();

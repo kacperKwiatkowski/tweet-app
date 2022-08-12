@@ -1,6 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.controller;
 
-import com.kacperKwiatkowski.tweetApp.dto.UserDto;
+import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
