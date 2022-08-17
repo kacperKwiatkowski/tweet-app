@@ -2,6 +2,8 @@ package com.kacperKwiatkowski.tweetApp.dto.user;
 
 import lombok.*;
 
+import java.util.UUID;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,7 +11,7 @@ import lombok.*;
 @Setter
 public class UserDto {
 
-    private String id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;

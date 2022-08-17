@@ -1,4 +1,4 @@
-package com.kacperKwiatkowski.tweetApp.controller;
+package com.kacperKwiatkowski.tweetApp.dto.tweet;
 
 import lombok.*;
 
@@ -15,5 +15,5 @@ public class ReplyTweetDto {
     private String title;
     private String message;
     private LocalDateTime postDateTime;
-    private UUID thread;
+    private UUID threadId;
 }

@@ -2,6 +2,7 @@ package com.kacperKwiatkowski.tweetApp.controller;
 
 import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
 import com.kacperKwiatkowski.tweetApp.service.TweetService;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ class TweetController {
     @PreAuthorize("hasAuthority('level:auth')")
     @GetMapping("/{username}")
     List<PersistedTweetDto> getAllTweetsByUsername(@PathVariable String username) {
-        return tweetService.getAllTweetsBuUsername(username);
+        return tweetService.getAllTweetsByUsername(username);
     }
 
     @PreAuthorize("hasAuthority('level:auth')")
@@ -50,7 +51,7 @@ class TweetController {
     }
 
     @PreAuthorize("hasAuthority('level:auth')")
-    @GetMapping("/{username}/like/{id}")
+    @PutMapping("/{username}/like/{id}")
     PersistedTweetDto likeTweet(@PathVariable String username, @PathVariable UUID id) {
         return tweetService.likeTweet(username, id);
     }

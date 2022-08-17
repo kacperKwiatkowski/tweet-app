@@ -1,25 +1,28 @@
 package com.kacperKwiatkowski.tweetApp.service;
 
-import com.kacperKwiatkowski.tweetApp.controller.ReplyTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
 import com.kacperKwiatkowski.tweetApp.mapper.TweetMapper;
+import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.validator.TweetValidatorFacade;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@AllArgsConstructor
 @Service
-public record TweetService(
-        UserRepository userRepository,
-        TweetRepository tweetRepository,
-        TweetValidatorFacade tweetValidatorFacade,
-        TweetMapper tweetMapper
-) {
+public class TweetService {
+
+    private final UserRepository userRepository;
+    private final TweetRepository tweetRepository;
+    private final TweetValidatorFacade tweetValidatorFacade;
+    private final TweetMapper tweetMapper;
 
     public List<PersistedTweetDto> getAllTweets() {
         return tweetRepository.findAll().stream()
@@ -27,8 +30,8 @@ public record TweetService(
                 .toList();
     }
 
-    public List<PersistedTweetDto> getAllTweetsBuUsername(String username) {
-        return tweetRepository.findAllByUsernameIn(username)
+    public List<PersistedTweetDto> getAllTweetsByUsername(String username) {
+        return tweetRepository.findAllByUsernameContaining(username)
                 .stream()
                 .map(tweetMapper::fromEntityToPersistedDto)
                 .toList();
@@ -39,18 +42,17 @@ public record TweetService(
 
         return tweetMapper.fromEntityToPersistedDto(
                 tweetRepository.save(
-                        tweetMapper.fromCreateDtoToEntity(username, tweetToSave)
-                                .assignNewTweetData()
+                        tweetMapper.fromCreateDtoToEntity(username, tweetToSave).assignNewTweetData()
                 )
         );
     }
 
-    public PersistedTweetDto updateTweet(String username, UUID id, UpdateTweetDto tweetWithUpdatedData) {
-        tweetValidatorFacade.validateTweetUpdateAction(username, id);
+    public PersistedTweetDto updateTweet(String username, UUID tweetId, UpdateTweetDto tweetWithUpdatedData) {
+        tweetValidatorFacade.validateTweetUpdateAction(username, tweetId);
 
         return tweetMapper.fromEntityToPersistedDto(
                 tweetRepository.save(
-                        tweetMapper.fromUpdateDtoToEntity(username, tweetWithUpdatedData, tweetRepository.findById(id).get())));
+                        tweetMapper.fromUpdateDtoToEntity(username, tweetId, tweetWithUpdatedData)));
     }
 
 
@@ -60,19 +62,22 @@ public record TweetService(
         tweetRepository.deleteById(id);
     }
 
-    public PersistedTweetDto likeTweet(String username, UUID id) {
-        tweetValidatorFacade.validateTweetLikeAction(username, id);
+    public PersistedTweetDto likeTweet(String username, UUID tweetId) {
+        tweetValidatorFacade.validateTweetLikeAction(username, tweetId);
 
-        return tweetMapper.fromEntityToPersistedDto(tweetRepository.findById(UUID.randomUUID()).get().incrementLikeCount());
+        TweetEntity tweetToIncreaseLikeCount = tweetRepository.findById(tweetId).get().incrementLikeCount();
 
+        return tweetMapper.fromEntityToPersistedDto(tweetRepository.save(tweetToIncreaseLikeCount));
     }
 
-    public PersistedTweetDto replyToTweet(String username, UUID id, ReplyTweetDto replyTweet) {
-        tweetValidatorFacade.validateTweetReplyAction(username, id, replyTweet.getThread());
+    public PersistedTweetDto replyToTweet(String username, UUID mainTweetId, ReplyTweetDto replyTweet) {
+        tweetValidatorFacade.validateTweetReplyAction(username, mainTweetId, replyTweet.getThreadId());
+
+        TweetEntity replyTweetEntity = tweetMapper.fromReplyDtoToEntity(username, replyTweet).assignNewReplyTweetData();
 
         return tweetMapper.fromEntityToPersistedDto(
                 tweetRepository.save(
-                        tweetMapper.fromReplyDtoToEntity(username, replyTweet)
+                        replyTweetEntity
                 )
         );
     }

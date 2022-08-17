@@ -14,7 +14,9 @@ import java.util.UUID;
 public class PersistedTweetDto {
 
     @NotBlank
-    private String userId;
+    private UUID tweetId;
+
+    private String username;
 
     @NotBlank
     private String title;
@@ -27,5 +29,5 @@ public class PersistedTweetDto {
     @NotBlank
     private LocalDateTime postDateTime;
 
-    private UUID thread;
+    private UUID threadId;
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface TweetRepository extends MongoRepository<TweetEntity, UUID> {
 
-    List<TweetEntity> findAllByUsernameIn(String usernames);
+    List<TweetEntity> findAllByUsernameContaining(String usernames);
 
     boolean existsByThreadId(UUID threadId);
 }

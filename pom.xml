@@ -18,15 +18,14 @@
     </properties>
     <dependencies>
 
-<!--        SPRING DEPENDENCIES-->
+        <!--        SPRING DEPENDENCIES-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -37,8 +36,19 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+        <!--        TEST-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-<!--        DATABASE DEPENDENCIES-->
+        <!--        DATABASE DEPENDENCIES-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
@@ -49,7 +59,7 @@
         </dependency>
 
 
-<!--        SWAGGER-->
+        <!--        SWAGGER-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
@@ -57,7 +67,7 @@
         </dependency>
 
 
-<!--        KAFKA DEPENDENCIES         -->
+        <!--        KAFKA DEPENDENCIES         -->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -74,7 +84,7 @@
         </dependency>
 
 
-<!--        TOOLS-->
+        <!--        TOOLS-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -112,6 +122,7 @@
             <artifactId>modelmapper</artifactId>
             <version>3.0.0</version>
         </dependency>
+
 
     </dependencies>
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 public class TweetEntity {
 
     @Id
-    private UUID id;
+    private UUID tweetId;
     private String username;
     private String avatar;
     private String title;
@@ -27,8 +27,15 @@ public class TweetEntity {
     //TODO Assign thread id if new tweet
     private UUID threadId;
 
+    //TODO Do it in DTOs
     public TweetEntity assignNewTweetData() {
+        this.tweetId = UUID.randomUUID();
+        this.likeCount = 0;
         this.threadId = UUID.randomUUID();
+        return this;
+    }
+
+    public TweetEntity assignNewReplyTweetData() {
         this.likeCount = 0;
         return this;
     }

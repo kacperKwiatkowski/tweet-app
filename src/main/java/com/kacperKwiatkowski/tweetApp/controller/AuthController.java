@@ -1,22 +1,24 @@
 package com.kacperKwiatkowski.tweetApp.controller;
 
+import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
+import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
+import com.kacperKwiatkowski.tweetApp.service.AuthService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-public class AuthController {
+class AuthController {
+
+    private final AuthService authService;
 
     @PostMapping("/register")
-    void register(){
-
+    UserDto register(@RequestBody RegisterUserDto userToRegister) {
+        return authService.registerUser(userToRegister);
     }
 
     @GetMapping("/{username}/forgot")
-    void forgotPassword(@PathVariable String username){
+    void forgotPassword(@PathVariable String username) {
 
     }
 }
