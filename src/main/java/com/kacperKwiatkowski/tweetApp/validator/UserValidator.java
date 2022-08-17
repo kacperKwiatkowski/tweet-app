@@ -1,18 +1,30 @@
 package com.kacperKwiatkowski.tweetApp.validator;
 
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@AllArgsConstructor
 @Component
-public record UserValidator(
-        UserRepository userRepository
-) {
+public class UserValidator {
 
-    private static final String USER_NON_EXISTENT_EXCEPTION_MESSAGE = "Following user doesn't exists in the repository: ";
+    private final UserRepository userRepository;
 
-    public Optional<String> checkIfUserExists(String username) {
-        return userRepository.existsByUsername(username) ? Optional.empty() : Optional.of(USER_NON_EXISTENT_EXCEPTION_MESSAGE + username);
+    private static final String USERNAME_NON_EXISTENT_EXCEPTION_MESSAGE = "User with following username doesn't exists in the repository: ";
+    private static final String EMAIL_NON_EXISTENT_EXCEPTION_MESSAGE = "User with following email doesn't exists in the repository: ";
+    private static final String PASSWORDS_MISMATCH_EXCEPTION_MESSAGE = "Given password do not match";
+
+    public Optional<String> checkIfUserExistsByUsername(String username) {
+        return userRepository.existsByUsername(username) ? Optional.empty() : Optional.of(USERNAME_NON_EXISTENT_EXCEPTION_MESSAGE + username);
+    }
+
+    public Optional<String> checkIfUserExistsByEmail(String email) {
+        return userRepository.existsByUsername(email) ? Optional.empty() : Optional.of(EMAIL_NON_EXISTENT_EXCEPTION_MESSAGE + email);
+    }
+
+    public Optional<String> checkIfPasswordAndPasswordConfirmAreValid(String password, String passwordConfirm) {
+        return password.equals(passwordConfirm) ? Optional.empty() : Optional.of(PASSWORDS_MISMATCH_EXCEPTION_MESSAGE);
     }
 }
