@@ -69,7 +69,7 @@ class TweetControllerIntegrationTest {
         // when
         EntityExchangeResult<List<PersistedTweetDto>> result = webTestClient.get()
                 .uri("/all")
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBodyList(PersistedTweetDto.class)
                 .returnResult();
@@ -117,7 +117,7 @@ class TweetControllerIntegrationTest {
         // when
         EntityExchangeResult<List<PersistedTweetDto>> result = webTestClient.get()
                 .uri("/" + USERNAME)
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBodyList(PersistedTweetDto.class)
                 .returnResult();
@@ -145,7 +145,7 @@ class TweetControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(tweetToCreate)
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBody(PersistedTweetDto.class)
                 .returnResult();
@@ -183,7 +183,7 @@ class TweetControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(tweetUpdateDto)
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBody(PersistedTweetDto.class)
                 .returnResult();
@@ -216,7 +216,7 @@ class TweetControllerIntegrationTest {
         // when
         webTestClient.delete()
                 .uri("/" + USERNAME + "/delete/" + removableTweet.getTweetId())
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange();
 
         // then
@@ -239,7 +239,7 @@ class TweetControllerIntegrationTest {
         // when
         EntityExchangeResult<PersistedTweetDto> result = webTestClient.put()
                 .uri("/" + USERNAME + "/like/" + tweetToIncreaseLikeCount.getTweetId())
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBody(PersistedTweetDto.class)
                 .returnResult();
@@ -274,7 +274,7 @@ class TweetControllerIntegrationTest {
         // when
         EntityExchangeResult<PersistedTweetDto> result = webTestClient.post()
                 .uri("/" + USERNAME + "/reply/" + originalTweet.getTweetId())
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(replyTweet)

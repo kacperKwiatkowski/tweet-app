@@ -57,7 +57,7 @@ class UserControllerIntegrationTest {
         // when
         EntityExchangeResult<List<UserDto>> result = webTestClient.get()
                 .uri(USERS_URL + "/all")
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBodyList(UserDto.class)
                 .returnResult();
@@ -88,7 +88,7 @@ class UserControllerIntegrationTest {
         // when
         EntityExchangeResult<List<UserDto>> result = webTestClient.get()
                 .uri(USERS_URL + "/search/" + USERNAME_TO_MATCH)
-                .header("Authorization", "Bearer " + jwtTokenProvider.successfulAuthentication())
+                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
                 .expectBodyList(UserDto.class)
                 .returnResult();
