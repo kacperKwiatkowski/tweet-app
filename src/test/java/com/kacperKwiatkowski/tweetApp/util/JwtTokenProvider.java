@@ -9,8 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.servlet.ServletException;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
@@ -26,7 +24,7 @@ public class JwtTokenProvider {
     @Autowired
     private SecretKey secretKey;
 
-    public String successfulAuthentication() throws IOException, ServletException {
+    public String provideToken() {
         return jwtConfig.getTokenPrefix() + Jwts.builder()
                 .claim("authorities", Set.of(new SimpleGrantedAuthority(ROLE_PREFIX + RoleType.USER), new SimpleGrantedAuthority(RoleAuthorities.AUTHENTICATED.getPermission())))
                 .setIssuedAt(new Date())
