@@ -53,21 +53,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
             http
-//                    .authorizeRequests()
-//                    .anyRequest()
-//                    .authenticated()
-//                    .and()
-//                    .httpBasic();
-                .cors().and()
-                .csrf().disable()
-                .headers().frameOptions().deny().and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
-                .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig),JwtUsernameAndPasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/login").permitAll()
+                    .cors().and()
+                    .csrf().disable()
+                    .headers().frameOptions().deny().and()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                    .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), jwtConfig, secretKey))
+                    .addFilterAfter(new JwtTokenVerifier(secretKey, jwtConfig), JwtUsernameAndPasswordAuthenticationFilter.class)
+                    .authorizeRequests()
+                    .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/register").permitAll()
+                    .antMatchers("/{username}/forgot").permitAll()
                 .anyRequest()
                 .authenticated();
 

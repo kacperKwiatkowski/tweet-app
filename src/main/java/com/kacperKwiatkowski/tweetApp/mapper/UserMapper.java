@@ -29,4 +29,9 @@ public class UserMapper {
 
         return convertedUser;
     }
+
+    public RegisterUserDto fromEntityToRegisterUserDto(UserEntity userToConvert) {
+        return modelMapper
+                .map(userToConvert, RegisterUserDto.class);
+    }
 }

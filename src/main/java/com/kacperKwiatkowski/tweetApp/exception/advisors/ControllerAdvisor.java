@@ -22,7 +22,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(FailedUserValidationException.class)
-    public ResponseEntity<ValidationReport> failedTweetValidationExceptionExceptionHandler(FailedUserValidationException e) {
+    public ResponseEntity<ValidationReport> failedUserValidationExceptionExceptionHandler(FailedUserValidationException e) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ValidationReport(USER_VALIDATION_FAILURE_MESSAGE, e.getExceptionMessages()));
