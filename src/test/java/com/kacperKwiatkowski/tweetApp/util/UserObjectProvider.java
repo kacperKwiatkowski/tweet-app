@@ -43,7 +43,6 @@ public class UserObjectProvider {
         String randomFieldIndex = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
         return RegisterUserDto.builder()
-                .id(UUID.randomUUID())
                 .firstName(randomFieldIndex)
                 .lastName(randomFieldIndex)
                 .email(randomFieldIndex)
@@ -51,7 +50,6 @@ public class UserObjectProvider {
                 .avatar(randomFieldIndex)
                 .password(randomFieldIndex)
                 .passwordConfirm(randomFieldIndex)
-                .roleType(RoleType.USER)
                 .build();
     }
 }

@@ -27,6 +27,8 @@ public class TweetAppApplication {
     private final PasswordEncoder passwordEncoder;
 
     static long staticDaysMinusCount = 10;
+    static long staticTitleCount = 1;
+    static long staticMessageCount = 1;
 
     public static void main(String[] args) {
         SpringApplication.run(TweetAppApplication.class, args);
@@ -76,7 +78,8 @@ public class TweetAppApplication {
                         tweetRepository.save(
                                 TweetEntity.builder()
                                         .tweetId(UUID.randomUUID())
-                                        .message("MESSAGE_1")
+                                        .title("TITLE_" + staticTitleCount++)
+                                        .message("MESSAGE_" + staticMessageCount++)
                                         .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("username1")
                                         .threadId(UUID.randomUUID())
@@ -86,7 +89,8 @@ public class TweetAppApplication {
                         tweetRepository.save(
                                 TweetEntity.builder()
                                         .tweetId(UUID.randomUUID())
-                                        .message("MESSAGE_2")
+                                        .title("TITLE_" + staticTitleCount++)
+                                        .message("MESSAGE_" + staticMessageCount++)
                                         .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("username2")
                                         .threadId(thread1)
@@ -98,7 +102,8 @@ public class TweetAppApplication {
             tweetRepository.save(
                     TweetEntity.builder()
                             .tweetId(UUID.randomUUID())
-                            .message("MESSAGE_1")
+                            .title("TITLE_" + staticTitleCount++)
+                            .message("MESSAGE_" + staticMessageCount++)
                             .postDateTime(LocalDateTime.now())
                             .username("username1")
                             .threadId(thread1)
@@ -108,7 +113,8 @@ public class TweetAppApplication {
             tweetRepository.save(
                     TweetEntity.builder()
                             .tweetId(UUID.randomUUID())
-                            .message("MESSAGE_1")
+                            .title("TITLE_" + staticTitleCount++)
+                            .message("MESSAGE_" + staticMessageCount++)
                             .postDateTime(LocalDateTime.now())
                             .username("username1")
                             .threadId(thread1)
@@ -118,6 +124,7 @@ public class TweetAppApplication {
             tweetRepository.save(
                     TweetEntity.builder()
                             .tweetId(UUID.randomUUID())
+                            .title("TITLE_" + staticTitleCount++)
                             .message("SHOULD BE FIRST")
                             .postDateTime(LocalDateTime.now().plusDays(2))
                             .username("username1")

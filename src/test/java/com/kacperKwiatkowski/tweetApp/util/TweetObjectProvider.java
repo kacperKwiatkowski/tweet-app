@@ -32,7 +32,6 @@ public class TweetObjectProvider {
         return CreateTweetDto.builder()
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
-                .postDateTime(LocalDateTime.now())
                 .build();
     }
 
@@ -58,7 +57,6 @@ public class TweetObjectProvider {
         return ReplyTweetDto.builder()
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
-                .postDateTime(LocalDateTime.now())
                 .threadId(UUID.randomUUID())
                 .build();
     }

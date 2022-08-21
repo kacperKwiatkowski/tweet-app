@@ -23,7 +23,7 @@ public class UserAuthService implements UserDetailsService {
 
             return org.springframework.security.core.userdetails
                     .User.builder()
-                    .username(user.getEmail())
+                    .username(user.getUsername())
                     .password(user.getPassword())
                     .authorities(user.getRoleType().getGrantedAuthorities())
                     .accountExpired(false)

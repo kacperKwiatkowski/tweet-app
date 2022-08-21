@@ -12,6 +12,8 @@ services:
     restart: always
     ports:
       - "27017:27017"
+    links:
+      - mongo-tweets
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo_username
       MONGO_INITDB_ROOT_PASSWORD: mongo_password

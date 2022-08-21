@@ -51,14 +51,11 @@ class UserMapperTest {
         UserEntity mappedUser = userMapper.fromRegisterUserDtoToEntity(userToMap);
 
         // then
-        assertEquals(userToMap.getId(), mappedUser.getId());
         assertEquals(userToMap.getFirstName(), mappedUser.getFirstName());
         assertEquals(userToMap.getLastName(), mappedUser.getLastName());
         assertEquals(userToMap.getEmail(), mappedUser.getEmail());
         assertEquals(userToMap.getUsername(), mappedUser.getUsername());
         assertEquals(userToMap.getAvatar(), mappedUser.getAvatar());
         assertEquals(userToMap.getPassword(), mappedUser.getPassword());
-        assertEquals(userToMap.getRoleType(), mappedUser.getRoleType());
     }
-
 }

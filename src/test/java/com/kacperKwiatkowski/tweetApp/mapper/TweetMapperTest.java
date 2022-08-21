@@ -70,7 +70,6 @@ class TweetMapperTest {
         // then
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
     }
 
     @Test
@@ -98,7 +97,6 @@ class TweetMapperTest {
         // then
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
         assertEquals(tweetToMap.getThreadId(), mappedTweet.getThreadId());
         assertEquals(USERNAME, mappedTweet.getUsername());
     }

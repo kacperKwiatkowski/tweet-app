@@ -25,4 +25,9 @@ class AuthController {
     void forgotPassword(@PathVariable String username) {
 
     }
+
+    @GetMapping("/logged")
+    UserDto getLoggedUser() {
+        return authService.getLoggedInUser();
+    }
 }

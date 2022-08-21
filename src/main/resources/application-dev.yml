@@ -15,7 +15,7 @@ spring:
       authentication-database: admin
       username: mongo_username
       password: mongo_password
-      database: tweets
+      database: mongo-tweets
       port: 27017
       host: localhost
 
