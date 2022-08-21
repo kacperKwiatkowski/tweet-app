@@ -44,4 +44,9 @@ public class TweetEntity {
         this.likeCount++;
         return this;
     }
+
+    public TweetEntity assignPostTime() {
+        this.postDateTime = LocalDateTime.now();
+        return this;
+    }
 }

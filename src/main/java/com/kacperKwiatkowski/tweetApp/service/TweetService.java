@@ -42,7 +42,9 @@ public class TweetService {
 
         return tweetMapper.fromEntityToPersistedDto(
                 tweetRepository.save(
-                        tweetMapper.fromCreateDtoToEntity(username, tweetToSave).assignNewTweetData()
+                        tweetMapper.fromCreateDtoToEntity(username, tweetToSave)
+                                .assignNewTweetData()
+                                .assignPostTime()
                 )
         );
     }
@@ -78,6 +80,7 @@ public class TweetService {
         return tweetMapper.fromEntityToPersistedDto(
                 tweetRepository.save(
                         replyTweetEntity
+                                .assignPostTime()
                 )
         );
     }

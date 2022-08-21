@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ class TweetController {
     @PreAuthorize("hasAuthority('level:auth')")
     @PostMapping("/{username}/add")
     @ResponseStatus(HttpStatus.CREATED)
-    PersistedTweetDto saveTweet(@PathVariable String username, @RequestBody CreateTweetDto tweetToSave) {
+    PersistedTweetDto saveTweet(@PathVariable String username, @Valid @RequestBody CreateTweetDto tweetToSave) {
         return tweetService.saveTweet(username, tweetToSave);
     }
 

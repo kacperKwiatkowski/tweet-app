@@ -18,14 +18,14 @@ public class TweetValidatorFacade {
     public void validateTweetSaveAction(String username) {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(
-                        userValidator.checkIfUserExistsByUsername(username)
+                        userValidator.checkIfUserDoesntExistsByUsername(username)
                 )));
     }
 
     public void validateTweetUpdateAction(String username, UUID tweetId) {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(
-                        userValidator.checkIfUserExistsByUsername(username),
+                        userValidator.checkIfUserDoesntExistsByUsername(username),
                         tweetValidator.checkIfTweetExists(tweetId)
                 )));
     }
@@ -33,7 +33,7 @@ public class TweetValidatorFacade {
     public void validateTweetLikeAction(String username, UUID tweetId) {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(
-                        userValidator.checkIfUserExistsByUsername(username),
+                        userValidator.checkIfUserDoesntExistsByUsername(username),
                         tweetValidator.checkIfTweetExists(tweetId)
                 )));
     }
@@ -41,7 +41,7 @@ public class TweetValidatorFacade {
     public void validateTweetReplyAction(String username, UUID mainTweetId, UUID tweetThreadId) {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(
-                        userValidator.checkIfUserExistsByUsername(username),
+                        userValidator.checkIfUserDoesntExistsByUsername(username),
                         tweetValidator.checkIfTweetExists(mainTweetId),
                         tweetValidator.checkIfTweetThreadExists(tweetThreadId)
                 )));
@@ -50,7 +50,7 @@ public class TweetValidatorFacade {
     public void validateTweetDeleteAction(String username, UUID tweetId) {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(
-                        userValidator.checkIfUserExistsByUsername(username),
+                        userValidator.checkIfUserDoesntExistsByUsername(username),
                         tweetValidator.checkIfTweetExists(tweetId)
                 )));
     }
