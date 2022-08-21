@@ -1,9 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.service;
 
-import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.*;
 import com.kacperKwiatkowski.tweetApp.mapper.TweetMapper;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
@@ -24,10 +21,14 @@ public class TweetService {
     private final TweetValidatorFacade tweetValidatorFacade;
     private final TweetMapper tweetMapper;
 
-    public List<PersistedTweetDto> getAllTweets() {
-        return tweetRepository.findAll().stream()
-                .map(tweetMapper::fromEntityToPersistedDto)
-                .toList();
+    private final WallService wallService;
+
+    public WallDto getAllTweets() {
+        return wallService.arrangeWall(
+                tweetRepository.findAll().stream()
+                        .map(tweetMapper::fromEntityToPersistedDto)
+                        .toList()
+        );
     }
 
     public List<PersistedTweetDto> getAllTweetsByUsername(String username) {

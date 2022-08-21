@@ -26,6 +26,8 @@ public class TweetAppApplication {
     private final TweetRepository tweetRepository;
     private final PasswordEncoder passwordEncoder;
 
+    static long staticDaysMinusCount = 10;
+
     public static void main(String[] args) {
         SpringApplication.run(TweetAppApplication.class, args);
     }
@@ -50,16 +52,6 @@ public class TweetAppApplication {
             userRepository.save(
                     UserEntity.builder()
                             .id(UUID.randomUUID())
-                            .email("email3")
-                            .username("username3")
-                            .password(passwordEncoder.encode("password3"))
-                            .roleType(RoleType.USER)
-                            .build()
-            );
-
-            userRepository.save(
-                    UserEntity.builder()
-                            .id(UUID.randomUUID())
                             .email("email2")
                             .username("username2")
                             .password(passwordEncoder.encode("password2"))
@@ -67,14 +59,27 @@ public class TweetAppApplication {
                             .build()
             );
 
+            userRepository.save(
+                    UserEntity.builder()
+                            .id(UUID.randomUUID())
+                            .email("email3")
+                            .username("username3")
+                            .password(passwordEncoder.encode("password3"))
+                            .roleType(RoleType.USER)
+                            .build()
+            );
+
+            UUID thread1 = UUID.randomUUID();
+
             userRepository.findAll().forEach(
                     user -> {
                         tweetRepository.save(
                                 TweetEntity.builder()
                                         .tweetId(UUID.randomUUID())
                                         .message("MESSAGE_1")
-                                        .postDateTime(LocalDateTime.now())
+                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("username1")
+                                        .threadId(UUID.randomUUID())
                                         .build()
                         );
 
@@ -82,13 +87,43 @@ public class TweetAppApplication {
                                 TweetEntity.builder()
                                         .tweetId(UUID.randomUUID())
                                         .message("MESSAGE_2")
-                                        .postDateTime(LocalDateTime.now())
+                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("username2")
+                                        .threadId(thread1)
                                         .build()
                         );
                     }
             );
 
+            tweetRepository.save(
+                    TweetEntity.builder()
+                            .tweetId(UUID.randomUUID())
+                            .message("MESSAGE_1")
+                            .postDateTime(LocalDateTime.now())
+                            .username("username1")
+                            .threadId(thread1)
+                            .build()
+            );
+
+            tweetRepository.save(
+                    TweetEntity.builder()
+                            .tweetId(UUID.randomUUID())
+                            .message("MESSAGE_1")
+                            .postDateTime(LocalDateTime.now())
+                            .username("username1")
+                            .threadId(thread1)
+                            .build()
+            );
+
+            tweetRepository.save(
+                    TweetEntity.builder()
+                            .tweetId(UUID.randomUUID())
+                            .message("SHOULD BE FIRST")
+                            .postDateTime(LocalDateTime.now().plusDays(2))
+                            .username("username1")
+                            .threadId(UUID.randomUUID())
+                            .build()
+            );
         };
     }
 }

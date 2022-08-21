@@ -2,7 +2,6 @@ package com.kacperKwiatkowski.tweetApp.dto.tweet;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,23 +10,20 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PersistedTweetDto {
+public class PersistedTweetDto implements Comparable<PersistedTweetDto> {
 
-    @NotBlank
     private UUID tweetId;
-
     private String username;
-
-    @NotBlank
     private String title;
-
-    @NotBlank
     private String message;
-
     private Long likeCount;
-
-    @NotBlank
     private LocalDateTime postDateTime;
-
     private UUID threadId;
+
+    @Override
+    public int compareTo(PersistedTweetDto o) {
+        if (this.postDateTime.isBefore(o.postDateTime)) return 1;
+        if (this.postDateTime.isAfter(o.postDateTime)) return -1;
+        else return 0;
+    }
 }

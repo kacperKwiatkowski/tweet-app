@@ -1,9 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.controller;
 
-import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.*;
 import com.kacperKwiatkowski.tweetApp.service.TweetService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +19,7 @@ class TweetController {
 
     @PreAuthorize("hasAuthority('level:auth')")
     @GetMapping("/all")
-    List<PersistedTweetDto> getAllTweets() {
+    WallDto getAllTweets() {
         return tweetService.getAllTweets();
     }
 
