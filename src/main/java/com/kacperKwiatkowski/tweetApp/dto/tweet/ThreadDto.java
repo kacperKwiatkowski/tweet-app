@@ -13,16 +13,16 @@ import java.util.List;
 @Setter
 public class ThreadDto implements Comparable<ThreadDto> {
 
-    private List<PersistedTweetDto> tweets;
+    private List<ExtendedTweetDto> tweets;
 
-    public void assignTweetToThread(PersistedTweetDto tweetToAssign) {
-        List<PersistedTweetDto> tweetDtoList = new ArrayList<>(this.tweets);
+    public void assignTweetToThread(ExtendedTweetDto tweetToAssign) {
+        List<ExtendedTweetDto> tweetDtoList = new ArrayList<>(this.tweets);
         tweetDtoList.add(tweetToAssign);
         this.tweets = tweetDtoList;
     }
 
     public ThreadDto sortThreadByPostTime() {
-        List<PersistedTweetDto> tweetDtoList = new ArrayList<>(this.tweets);
+        List<ExtendedTweetDto> tweetDtoList = new ArrayList<>(this.tweets);
         Collections.sort(tweetDtoList);
         this.tweets = tweetDtoList;
         return this;

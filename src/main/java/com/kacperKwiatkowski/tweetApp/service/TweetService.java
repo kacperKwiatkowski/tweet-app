@@ -2,6 +2,7 @@ package com.kacperKwiatkowski.tweetApp.service;
 
 import com.kacperKwiatkowski.tweetApp.dto.tweet.*;
 import com.kacperKwiatkowski.tweetApp.mapper.TweetMapper;
+import com.kacperKwiatkowski.tweetApp.mapper.UserMapper;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
@@ -19,29 +20,32 @@ public class TweetService {
     private final UserRepository userRepository;
     private final TweetRepository tweetRepository;
     private final TweetValidatorFacade tweetValidatorFacade;
+
+    private final UserMapper userMapper;
     private final TweetMapper tweetMapper;
 
+    private final LikeService likeService;
     private final WallService wallService;
 
     public WallDto getAllTweets() {
         return wallService.arrangeWall(
                 tweetRepository.findAll().stream()
-                        .map(tweetMapper::fromEntityToPersistedDto)
+                        .map(this::constructExtendedTweetDto)
                         .toList()
         );
     }
 
-    public List<PersistedTweetDto> getAllTweetsByUsername(String username) {
+    public List<ExtendedTweetDto> getAllTweetsByUsername(String username) {
         return tweetRepository.findAllByUsernameContaining(username)
                 .stream()
-                .map(tweetMapper::fromEntityToPersistedDto)
+                .map(this::constructExtendedTweetDto)
                 .toList();
     }
 
-    public PersistedTweetDto saveTweet(String username, CreateTweetDto tweetToSave) {
+    public ExtendedTweetDto saveTweet(String username, CreateTweetDto tweetToSave) {
         tweetValidatorFacade.validateTweetSaveAction(username);
 
-        return tweetMapper.fromEntityToPersistedDto(
+        return constructExtendedTweetDto(
                 tweetRepository.save(
                         tweetMapper.fromCreateDtoToEntity(username, tweetToSave)
                                 .assignNewTweetData()
@@ -50,10 +54,10 @@ public class TweetService {
         );
     }
 
-    public PersistedTweetDto updateTweet(String username, UUID tweetId, UpdateTweetDto tweetWithUpdatedData) {
+    public ExtendedTweetDto updateTweet(String username, UUID tweetId, UpdateTweetDto tweetWithUpdatedData) {
         tweetValidatorFacade.validateTweetUpdateAction(username, tweetId);
 
-        return tweetMapper.fromEntityToPersistedDto(
+        return constructExtendedTweetDto(
                 tweetRepository.save(
                         tweetMapper.fromUpdateDtoToEntity(username, tweetId, tweetWithUpdatedData)));
     }
@@ -65,24 +69,31 @@ public class TweetService {
         tweetRepository.deleteById(id);
     }
 
-    public PersistedTweetDto likeTweet(String username, UUID tweetId) {
+    public void likeTweet(String username, UUID tweetId) {
         tweetValidatorFacade.validateTweetLikeAction(username, tweetId);
 
-        TweetEntity tweetToIncreaseLikeCount = tweetRepository.findById(tweetId).get().incrementLikeCount();
-
-        return tweetMapper.fromEntityToPersistedDto(tweetRepository.save(tweetToIncreaseLikeCount));
+        likeService.saveLike(username, tweetId);
     }
 
-    public PersistedTweetDto replyToTweet(String username, UUID mainTweetId, ReplyTweetDto replyTweet) {
+    public ExtendedTweetDto replyToTweet(String username, UUID mainTweetId, ReplyTweetDto replyTweet) {
         tweetValidatorFacade.validateTweetReplyAction(username, mainTweetId, replyTweet.getThreadId());
 
-        TweetEntity replyTweetEntity = tweetMapper.fromReplyDtoToEntity(username, replyTweet).assignNewReplyTweetData();
+        TweetEntity replyTweetEntity = tweetMapper.fromReplyDtoToEntity(username, replyTweet);
 
         return tweetMapper.fromEntityToPersistedDto(
                 tweetRepository.save(
                         replyTweetEntity
+                                .assignNewReplyData()
                                 .assignPostTime()
                 )
+        );
+    }
+
+    private ExtendedTweetDto constructExtendedTweetDto(TweetEntity tweet) {
+        return tweetMapper.mapExtendedTweetDto(
+                tweet,
+                userRepository.findUserEntityByUsername(tweet.getUsername()),
+                likeService.getLikesCountForTweet(tweet.getTweetId())
         );
     }
 }

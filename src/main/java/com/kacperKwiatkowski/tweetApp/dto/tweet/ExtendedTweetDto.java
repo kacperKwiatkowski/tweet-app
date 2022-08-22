@@ -10,10 +10,12 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PersistedTweetDto implements Comparable<PersistedTweetDto> {
+public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
     private UUID tweetId;
     private String username;
+    private String firstName;
+    private String lastName;
     private String title;
     private String message;
     private Long likeCount;
@@ -21,9 +23,9 @@ public class PersistedTweetDto implements Comparable<PersistedTweetDto> {
     private UUID threadId;
 
     @Override
-    public int compareTo(PersistedTweetDto o) {
-        if (this.postDateTime.isBefore(o.postDateTime)) return 1;
-        if (this.postDateTime.isAfter(o.postDateTime)) return -1;
+    public int compareTo(ExtendedTweetDto o) {
+        if (this.postDateTime.isAfter(o.postDateTime)) return 1;
+        if (this.postDateTime.isBefore(o.postDateTime)) return -1;
         else return 0;
     }
 }

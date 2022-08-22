@@ -1,7 +1,7 @@
 package com.kacperKwiatkowski.tweetApp.controller;
 
 import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.ExtendedTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
@@ -67,11 +67,11 @@ class TweetControllerIntegrationTest {
         tweetRepository.save(persistedTweet);
 
         // when
-        EntityExchangeResult<List<PersistedTweetDto>> result = webTestClient.get()
+        EntityExchangeResult<List<ExtendedTweetDto>> result = webTestClient.get()
                 .uri("/all")
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
-                .expectBodyList(PersistedTweetDto.class)
+                .expectBodyList(ExtendedTweetDto.class)
                 .returnResult();
 
         // then
@@ -115,11 +115,11 @@ class TweetControllerIntegrationTest {
         tweetRepository.saveAll(Stream.concat(matchingTweets.stream(), nonMatchingTweets.stream()).toList());
 
         // when
-        EntityExchangeResult<List<PersistedTweetDto>> result = webTestClient.get()
+        EntityExchangeResult<List<ExtendedTweetDto>> result = webTestClient.get()
                 .uri("/" + USERNAME)
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
-                .expectBodyList(PersistedTweetDto.class)
+                .expectBodyList(ExtendedTweetDto.class)
                 .returnResult();
 
         // then
@@ -140,14 +140,14 @@ class TweetControllerIntegrationTest {
         userRepository.save(tweetOwner);
 
         // when
-        EntityExchangeResult<PersistedTweetDto> result = webTestClient.post()
+        EntityExchangeResult<ExtendedTweetDto> result = webTestClient.post()
                 .uri("/" + USERNAME + "/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(tweetToCreate)
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
-                .expectBody(PersistedTweetDto.class)
+                .expectBody(ExtendedTweetDto.class)
                 .returnResult();
 
         // then
@@ -178,14 +178,14 @@ class TweetControllerIntegrationTest {
         tweetRepository.save(updatableTweet);
 
         // when
-        EntityExchangeResult<PersistedTweetDto> result = webTestClient.put()
+        EntityExchangeResult<ExtendedTweetDto> result = webTestClient.put()
                 .uri("/" + USERNAME + "/update/" + updatableTweet.getTweetId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(tweetUpdateDto)
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
-                .expectBody(PersistedTweetDto.class)
+                .expectBody(ExtendedTweetDto.class)
                 .returnResult();
 
         // then
@@ -233,15 +233,14 @@ class TweetControllerIntegrationTest {
 
         TweetEntity tweetToIncreaseLikeCount = TweetObjectProvider.provideTweetEntity();
         tweetToIncreaseLikeCount.setUsername(USERNAME);
-        tweetToIncreaseLikeCount.setLikeCount(0);
         tweetRepository.save(tweetToIncreaseLikeCount);
 
         // when
-        EntityExchangeResult<PersistedTweetDto> result = webTestClient.put()
+        EntityExchangeResult<ExtendedTweetDto> result = webTestClient.put()
                 .uri("/" + USERNAME + "/like/" + tweetToIncreaseLikeCount.getTweetId())
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
-                .expectBody(PersistedTweetDto.class)
+                .expectBody(ExtendedTweetDto.class)
                 .returnResult();
 
         // then
@@ -250,9 +249,6 @@ class TweetControllerIntegrationTest {
         assertNotNull(result.getResponseBody());
         assertTrue(tweetFromRepository.isPresent());
         assertEquals(tweetFromRepository.get().getTweetId(), result.getResponseBody().getTweetId());
-        assertNotEquals(tweetToIncreaseLikeCount.getLikeCount(), result.getResponseBody().getLikeCount());
-        assertNotEquals(tweetToIncreaseLikeCount.getLikeCount(), tweetFromRepository.get().getLikeCount());
-        assertEquals(result.getResponseBody().getLikeCount(), tweetFromRepository.get().getLikeCount());
     }
 
     @Test
@@ -272,14 +268,14 @@ class TweetControllerIntegrationTest {
         replyTweet.setUsername(USERNAME);
 
         // when
-        EntityExchangeResult<PersistedTweetDto> result = webTestClient.post()
+        EntityExchangeResult<ExtendedTweetDto> result = webTestClient.post()
                 .uri("/" + USERNAME + "/reply/" + originalTweet.getTweetId())
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .bodyValue(replyTweet)
                 .exchange()
-                .expectBody(PersistedTweetDto.class)
+                .expectBody(ExtendedTweetDto.class)
                 .returnResult();
 
         // then
@@ -292,16 +288,15 @@ class TweetControllerIntegrationTest {
         assertEquals(replyTweet.getThreadId().toString(), tweetFromRepository.get().getThreadId().toString());
     }
 
-    private boolean comparePersistedTweetEntityToResponseBody(TweetEntity persistedTweet, List<PersistedTweetDto> result) {
+    private boolean comparePersistedTweetEntityToResponseBody(TweetEntity persistedTweet, List<ExtendedTweetDto> result) {
         return result.stream()
                 .anyMatch(tweet ->
-                        tweet.getUsername().equals(persistedTweet.getUsername()) &&
-                                tweet.getTweetId().equals(persistedTweet.getTweetId()) &&
-                                tweet.getTitle().equals(persistedTweet.getTitle()) &&
-                                tweet.getMessage().equals(persistedTweet.getMessage()) &&
-                                // TODO Adapt common DateTime format
-                                //tweet.getPostDateTime().equals(persistedTweet.getPostDateTime()) &&
-                                tweet.getLikeCount().equals(persistedTweet.getLikeCount())
+                                tweet.getUsername().equals(persistedTweet.getUsername()) &&
+                                        tweet.getTweetId().equals(persistedTweet.getTweetId()) &&
+                                        tweet.getTitle().equals(persistedTweet.getTitle()) &&
+                                        tweet.getMessage().equals(persistedTweet.getMessage())
+                        // TODO Adapt common DateTime format
+                        //tweet.getPostDateTime().equals(persistedTweet.getPostDateTime()) &&
                 );
     }
 }

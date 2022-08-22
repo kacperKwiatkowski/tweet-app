@@ -1,7 +1,7 @@
 package com.kacperKwiatkowski.tweetApp.util;
 
 import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.ExtendedTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
@@ -19,7 +19,6 @@ public class TweetObjectProvider {
                 .tweetId(UUID.randomUUID())
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
-                .likeCount(Long.MIN_VALUE)
                 .postDateTime(LocalDateTime.now())
                 .threadId(UUID.randomUUID())
                 .build();
@@ -35,11 +34,11 @@ public class TweetObjectProvider {
                 .build();
     }
 
-    public static PersistedTweetDto providePersistedTweetDto() {
+    public static ExtendedTweetDto providePersistedTweetDto() {
 
         String randomFieldIndex = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
-        return PersistedTweetDto.builder()
+        return ExtendedTweetDto.builder()
                 .tweetId(UUID.randomUUID())
                 .username(randomFieldIndex)
                 .title(randomFieldIndex)

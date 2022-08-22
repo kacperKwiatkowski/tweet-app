@@ -1,6 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.service;
 
-import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.ExtendedTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.ThreadDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.WallDto;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Component
 public class WallService {
 
-    public WallDto arrangeWall(List<PersistedTweetDto> allTweets) {
+    public WallDto arrangeWall(List<ExtendedTweetDto> allTweets) {
 
         Map<UUID, ThreadDto> threadsMap = organiseTweetsInThreads(allTweets);
 
@@ -22,7 +22,7 @@ public class WallService {
         return new WallDto(threads.stream().map(ThreadDto::sortThreadByPostTime).toList()).sortThreadByPostTime();
     }
 
-    private Map<UUID, ThreadDto> organiseTweetsInThreads(List<PersistedTweetDto> allTweets) {
+    private Map<UUID, ThreadDto> organiseTweetsInThreads(List<ExtendedTweetDto> allTweets) {
         Map<UUID, ThreadDto> threadsMap = new TreeMap<>();
 
         allTweets.forEach(tweet -> assignTweetToThread(tweet, threadsMap));
@@ -30,7 +30,7 @@ public class WallService {
         return threadsMap;
     }
 
-    private void assignTweetToThread(PersistedTweetDto tweet, Map<UUID, ThreadDto> threadsMap) {
+    private void assignTweetToThread(ExtendedTweetDto tweet, Map<UUID, ThreadDto> threadsMap) {
         if (threadsMap.containsKey(tweet.getThreadId())) {
             ThreadDto foundThread = threadsMap.get(tweet.getThreadId());
             foundThread.assignTweetToThread(tweet);

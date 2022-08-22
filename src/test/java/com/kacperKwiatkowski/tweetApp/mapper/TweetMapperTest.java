@@ -1,7 +1,7 @@
 package com.kacperKwiatkowski.tweetApp.mapper;
 
 import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
-import com.kacperKwiatkowski.tweetApp.dto.tweet.PersistedTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.ExtendedTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
@@ -30,13 +30,12 @@ class TweetMapperTest {
         TweetEntity tweetToMap = TweetObjectProvider.provideTweetEntity();
 
         // when
-        PersistedTweetDto mappedTweet = tweetMapper.fromEntityToPersistedDto(tweetToMap);
+        ExtendedTweetDto mappedTweet = tweetMapper.fromEntityToPersistedDto(tweetToMap);
 
         // then
         assertEquals(tweetToMap.getTweetId(), mappedTweet.getTweetId());
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getLikeCount(), mappedTweet.getLikeCount());
         assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
         assertEquals(tweetToMap.getThreadId(), mappedTweet.getThreadId());
 
@@ -45,7 +44,7 @@ class TweetMapperTest {
     @Test
     void shouldMapPersistedDtoToEntity() {
         // given
-        PersistedTweetDto tweetToMap = TweetObjectProvider.providePersistedTweetDto();
+        ExtendedTweetDto tweetToMap = TweetObjectProvider.providePersistedTweetDto();
 
         // when
         TweetEntity mappedTweet = tweetMapper.fromPersistedDtoToEntity(tweetToMap);
@@ -54,7 +53,6 @@ class TweetMapperTest {
         assertEquals(tweetToMap.getTweetId(), mappedTweet.getTweetId());
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getLikeCount(), mappedTweet.getLikeCount());
         assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
         assertEquals(tweetToMap.getThreadId(), mappedTweet.getThreadId());
     }

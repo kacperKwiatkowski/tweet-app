@@ -44,8 +44,10 @@ public class TweetAppApplication {
             userRepository.save(
                     UserEntity.builder()
                             .id(UUID.randomUUID())
-                            .email("email1")
-                            .username("username1")
+                            .firstName("Adam")
+                            .lastName("Adamski")
+                            .email("adam@gmail.com")
+                            .username("4d4m")
                             .password(passwordEncoder.encode("password1"))
                             .roleType(RoleType.USER)
                             .build()
@@ -54,8 +56,10 @@ public class TweetAppApplication {
             userRepository.save(
                     UserEntity.builder()
                             .id(UUID.randomUUID())
-                            .email("email2")
-                            .username("username2")
+                            .firstName("Maria")
+                            .lastName("Kowalska")
+                            .email("maria@gmail.com")
+                            .username("m4ria")
                             .password(passwordEncoder.encode("password2"))
                             .roleType(RoleType.USER)
                             .build()
@@ -64,8 +68,10 @@ public class TweetAppApplication {
             userRepository.save(
                     UserEntity.builder()
                             .id(UUID.randomUUID())
-                            .email("email3")
-                            .username("username3")
+                            .firstName("Bożena")
+                            .lastName("Czartoryska")
+                            .email("bozena@gmail.com")
+                            .username("b0zen4")
                             .password(passwordEncoder.encode("password3"))
                             .roleType(RoleType.USER)
                             .build()
@@ -81,7 +87,7 @@ public class TweetAppApplication {
                                         .title("TITLE_" + staticTitleCount++)
                                         .message("MESSAGE_" + staticMessageCount++)
                                         .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
-                                        .username("username1")
+                                        .username("4d4m")
                                         .threadId(UUID.randomUUID())
                                         .build()
                         );
@@ -92,7 +98,18 @@ public class TweetAppApplication {
                                         .title("TITLE_" + staticTitleCount++)
                                         .message("MESSAGE_" + staticMessageCount++)
                                         .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
-                                        .username("username2")
+                                        .username("m4ria")
+                                        .threadId(thread1)
+                                        .build()
+                        );
+
+                        tweetRepository.save(
+                                TweetEntity.builder()
+                                        .tweetId(UUID.randomUUID())
+                                        .title("TITLE_" + staticTitleCount++)
+                                        .message("MESSAGE_" + staticMessageCount++)
+                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
+                                        .username("b0zen4")
                                         .threadId(thread1)
                                         .build()
                         );
@@ -105,7 +122,7 @@ public class TweetAppApplication {
                             .title("TITLE_" + staticTitleCount++)
                             .message("MESSAGE_" + staticMessageCount++)
                             .postDateTime(LocalDateTime.now())
-                            .username("username1")
+                            .username("4d4m")
                             .threadId(thread1)
                             .build()
             );
@@ -116,7 +133,7 @@ public class TweetAppApplication {
                             .title("TITLE_" + staticTitleCount++)
                             .message("MESSAGE_" + staticMessageCount++)
                             .postDateTime(LocalDateTime.now())
-                            .username("username1")
+                            .username("4d4m")
                             .threadId(thread1)
                             .build()
             );
@@ -126,8 +143,8 @@ public class TweetAppApplication {
                             .tweetId(UUID.randomUUID())
                             .title("TITLE_" + staticTitleCount++)
                             .message("SHOULD BE FIRST")
-                            .postDateTime(LocalDateTime.now().plusDays(2))
-                            .username("username1")
+                            .postDateTime(LocalDateTime.now())
+                            .username("m4ria")
                             .threadId(UUID.randomUUID())
                             .build()
             );

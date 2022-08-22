@@ -30,6 +30,7 @@ public class AuthService {
     }
 
     public UserDto getLoggedInUser() {
+        //TODO 500 is thrown when user is not logged
         return userMapper.fromEntityToUserDto(
                 userRepository.findUserEntityByUsername(
                         SecurityContextHolder.getContext().getAuthentication().getName()

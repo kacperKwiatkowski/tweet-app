@@ -34,7 +34,8 @@ public class TweetValidatorFacade {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(
                         userValidator.checkIfUserDoesntExistsByUsername(username),
-                        tweetValidator.checkIfTweetExists(tweetId)
+                        tweetValidator.checkIfTweetExists(tweetId),
+                        tweetValidator.checkIfTweetAlreadyLiked(username, tweetId)
                 )));
     }
 
