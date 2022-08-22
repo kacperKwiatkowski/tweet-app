@@ -5,6 +5,7 @@ import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -15,9 +16,9 @@ import javax.validation.Valid;
 class AuthController {
     private final AuthService authService;
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    UserDto register(@Valid @RequestBody RegisterUserDto userToRegister) {
+    UserDto register(@Valid @ModelAttribute RegisterUserDto userToRegister) {
         return authService.registerUser(userToRegister);
     }
 

@@ -25,6 +25,8 @@ public class AuthService {
         return userMapper.fromEntityToUserDto(
                 userRepository.save(
                         userMapper.fromRegisterUserDtoToEntity(userToRegister)
+                                .assignUserId()
+                                .assignRole()
                 )
         );
     }

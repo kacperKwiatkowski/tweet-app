@@ -2,6 +2,7 @@ package com.kacperKwiatkowski.tweetApp.model;
 
 import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
 import lombok.*;
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,7 +23,17 @@ public class UserEntity {
     private String email;
     private String username;
     //TODO create logic for avatar
-    private String avatar;
+    private Binary avatar;
     private String password;
     private RoleType roleType;
+
+    public UserEntity assignUserId() {
+        this.id = UUID.randomUUID();
+        return this;
+    }
+
+    public UserEntity assignRole() {
+        this.roleType = RoleType.USER;
+        return this;
+    }
 }

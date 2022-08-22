@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Base64;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -24,6 +25,7 @@ public class TweetMapper {
         extendedTweetToMap.setLastName(userToConvert.getLastName());
         extendedTweetToMap.setUsername(userToConvert.getUsername());
         extendedTweetToMap.setLikeCount(likeCount);
+        extendedTweetToMap.setAvatar(Base64.getEncoder().encodeToString(userToConvert.getAvatar().getData()));
         return extendedTweetToMap;
     }
 

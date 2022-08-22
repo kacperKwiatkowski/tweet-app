@@ -1,6 +1,7 @@
 package com.kacperKwiatkowski.tweetApp.dto.user;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -27,8 +28,8 @@ public class RegisterUserDto {
     @NotEmpty(message = "Can't be empty")
     private String username;
 
-    @NotEmpty(message = "Can't be empty")
-    private String avatar;
+    //    @NotEmpty(message = "Can't be empty")
+    private MultipartFile avatar;
 
     @NotEmpty(message = "Can't be empty")
     private String password;

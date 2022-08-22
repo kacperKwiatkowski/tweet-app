@@ -16,6 +16,7 @@ public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
     private String username;
     private String firstName;
     private String lastName;
+    private String avatar;
     private String title;
     private String message;
     private Long likeCount;

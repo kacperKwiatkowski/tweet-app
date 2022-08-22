@@ -6,6 +6,7 @@ import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
 import lombok.AllArgsConstructor;
+import org.bson.types.Binary;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -49,9 +54,11 @@ public class TweetAppApplication {
                             .email("adam@gmail.com")
                             .username("4d4m")
                             .password(passwordEncoder.encode("password1"))
+                            .avatar(getBinaryImage("C:\\Users\\Kacper\\Desktop\\man-with-beard-avatar-character-isolated-icon-free-vector.jpg"))
                             .roleType(RoleType.USER)
                             .build()
             );
+
 
             userRepository.save(
                     UserEntity.builder()
@@ -61,6 +68,7 @@ public class TweetAppApplication {
                             .email("maria@gmail.com")
                             .username("m4ria")
                             .password(passwordEncoder.encode("password2"))
+                            .avatar(getBinaryImage("C:\\Users\\Kacper\\Desktop\\beautiful-latin-woman-avatar-character-icon-free-vector.jpg"))
                             .roleType(RoleType.USER)
                             .build()
             );
@@ -73,6 +81,7 @@ public class TweetAppApplication {
                             .email("bozena@gmail.com")
                             .username("b0zen4")
                             .password(passwordEncoder.encode("password3"))
+                            .avatar(getBinaryImage("C:\\Users\\Kacper\\Desktop\\istockphoto-1331329483-170667a.jpg"))
                             .roleType(RoleType.USER)
                             .build()
             );
@@ -149,5 +158,15 @@ public class TweetAppApplication {
                             .build()
             );
         };
+    }
+
+    private Binary getBinaryImage(String path) {
+        try {
+            File file = Paths.get(path).toFile();
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            return new Binary(bytes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
