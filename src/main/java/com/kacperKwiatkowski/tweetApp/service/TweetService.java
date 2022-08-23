@@ -76,7 +76,7 @@ public class TweetService {
 
         return constructExtendedTweetDto(
                 tweetRepository.save(
-                        tweetMapper.fromUpdateDtoToEntity(username, tweetId, tweetWithUpdatedData)));
+                        tweetMapper.fromUpdateDtoToEntity(tweetRepository.findById(tweetId).get(), tweetWithUpdatedData)));
     }
 
 

@@ -11,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
-import java.util.UUID;
 
 @AllArgsConstructor
 @Component
@@ -43,10 +42,10 @@ public class TweetMapper {
         return convertedTweet;
     }
 
-    public TweetEntity fromUpdateDtoToEntity(String username, UUID tweetId, UpdateTweetDto tweetToUpdate) {
-        TweetEntity convertedTweet = modelMapper.map(tweetToUpdate, TweetEntity.class);
-        convertedTweet.setTweetId(tweetId);
-        return convertedTweet;
+    public TweetEntity fromUpdateDtoToEntity(TweetEntity tweetToUpdate, UpdateTweetDto updatedTweetData) {
+        tweetToUpdate.setTitle(updatedTweetData.getTitle());
+        tweetToUpdate.setMessage(updatedTweetData.getMessage());
+        return tweetToUpdate;
     }
 
     public TweetEntity fromReplyDtoToEntity(String username, ReplyTweetDto tweetToConvert) {

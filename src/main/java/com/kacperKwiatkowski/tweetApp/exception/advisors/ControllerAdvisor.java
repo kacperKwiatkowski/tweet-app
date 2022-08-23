@@ -4,7 +4,6 @@ import com.kacperKwiatkowski.tweetApp.exception.exceptions.AvatarParseException;
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedTweetValidationException;
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedUserValidationException;
 import com.kacperKwiatkowski.tweetApp.validator.ValidationReport;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -42,10 +41,11 @@ public class ControllerAdvisor {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ValidationReport> bindExceptionHandler(BindException e) {
 
-        List<String> exceptionMessages = e.getAllErrors().stream()
-                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+
+        List<String> exceptionMessages = e.getFieldErrors().stream()
+                .map(error -> "Incorrect value for field: " + error.getField())
                 .toList();
-        // ...
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ValidationReport(TWEET_VALIDATION_FAILURE_MESSAGE, exceptionMessages));
