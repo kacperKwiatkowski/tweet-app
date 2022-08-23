@@ -27,6 +27,23 @@ public class TweetService {
     private final LikeService likeService;
     private final WallService wallService;
 
+    public ExtendedTweetDto getTweetById(UUID tweetId) {
+        tweetValidatorFacade.validateTweetGetAction(tweetId);
+
+        return constructExtendedTweetDto(tweetRepository.findById(tweetId).get());
+    }
+
+    public ThreadDto getThreadById(UUID threadId) {
+
+        tweetValidatorFacade.validateThreadGetAction(threadId);
+
+        return wallService.arrangeThread(
+                tweetRepository.findAllByThreadId(threadId).stream()
+                        .map(this::constructExtendedTweetDto)
+                        .toList()
+        );
+    }
+
     public WallDto getAllTweets() {
         return wallService.arrangeWall(
                 tweetRepository.findAll().stream()

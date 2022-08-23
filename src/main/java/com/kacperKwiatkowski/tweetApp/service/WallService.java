@@ -22,6 +22,10 @@ public class WallService {
         return new WallDto(threads.stream().map(ThreadDto::sortThreadByPostTime).toList()).sortThreadByPostTime();
     }
 
+    public ThreadDto arrangeThread(List<ExtendedTweetDto> allTweets) {
+        return new ThreadDto(allTweets).sortThreadByPostTime();
+    }
+
     private Map<UUID, ThreadDto> organiseTweetsInThreads(List<ExtendedTweetDto> allTweets) {
         Map<UUID, ThreadDto> threadsMap = new TreeMap<>();
 

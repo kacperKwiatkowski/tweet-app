@@ -18,7 +18,6 @@ public class TweetValidator {
     private static final String TWEET_NON_EXISTENT_EXCEPTION_MESSAGE = "Following tweet doesn't exists in the repository: ";
     private static final String TWEET_THREAD_NON_EXISTENT_EXCEPTION_MESSAGE = "Following tweet thread doesn't exists in the repository: ";
     private static final String TWEET_ALREADY_LIKED_BY_USER_EXCEPTION_MESSAGE = "Following tweet already liked by user: ";
-
     public Optional<String> checkIfTweetExists(UUID tweetId) {
         return tweetRepository.existsById(tweetId) ? Optional.empty() : Optional.of(TWEET_NON_EXISTENT_EXCEPTION_MESSAGE + tweetId);
     }

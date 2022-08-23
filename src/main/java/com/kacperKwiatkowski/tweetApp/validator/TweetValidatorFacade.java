@@ -15,6 +15,20 @@ public class TweetValidatorFacade {
     private final TweetValidator tweetValidator;
     private final ValidatorUtil validatorUtil;
 
+    public void validateTweetGetAction(UUID tweetId) {
+        verifyExceptionMessages(
+                validatorUtil.gatherExceptionMessages(List.of(
+                        tweetValidator.checkIfTweetExists(tweetId)
+                )));
+    }
+
+    public void validateThreadGetAction(UUID threadId) {
+        verifyExceptionMessages(
+                validatorUtil.gatherExceptionMessages(List.of(
+                        tweetValidator.checkIfTweetThreadExists(threadId)
+                )));
+    }
+
     public void validateTweetSaveAction(String username) {
         verifyExceptionMessages(
                 validatorUtil.gatherExceptionMessages(List.of(

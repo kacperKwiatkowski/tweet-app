@@ -3,6 +3,7 @@ package com.kacperKwiatkowski.tweetApp.controller;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.*;
 import com.kacperKwiatkowski.tweetApp.service.TweetService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +12,25 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @AllArgsConstructor
 class TweetController {
 
     private final TweetService tweetService;
+
+    @PreAuthorize("hasAuthority('level:auth')")
+    @GetMapping("/{id}/get/tweet")
+    ExtendedTweetDto getTweetById(@PathVariable UUID id) {
+        return tweetService.getTweetById(id);
+    }
+
+    @PreAuthorize("hasAuthority('level:auth')")
+    @GetMapping("/{id}/get/thread")
+    ThreadDto getThreadById(@PathVariable UUID id) {
+        return tweetService.getThreadById(id);
+    }
 
     @PreAuthorize("hasAuthority('level:auth')")
     @GetMapping("/all")

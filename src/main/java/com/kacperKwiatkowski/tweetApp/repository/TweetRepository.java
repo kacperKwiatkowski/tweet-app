@@ -13,4 +13,6 @@ public interface TweetRepository extends MongoRepository<TweetEntity, UUID> {
     List<TweetEntity> findAllByUsernameContaining(String usernames);
 
     boolean existsByThreadId(UUID threadId);
+
+    List<TweetEntity> findAllByThreadId(UUID threadId);
 }

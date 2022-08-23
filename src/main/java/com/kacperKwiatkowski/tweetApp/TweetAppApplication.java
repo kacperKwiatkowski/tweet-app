@@ -15,10 +15,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -31,9 +30,9 @@ public class TweetAppApplication {
     private final TweetRepository tweetRepository;
     private final PasswordEncoder passwordEncoder;
 
-    static long staticDaysMinusCount = 10;
-    static long staticTitleCount = 1;
-    static long staticMessageCount = 1;
+    private static long staticDaysMinusCount = 10;
+    private static long staticTitleCount = 1;
+    private static long staticMessageCount = 1;
 
     public static void main(String[] args) {
         SpringApplication.run(TweetAppApplication.class, args);
@@ -54,7 +53,7 @@ public class TweetAppApplication {
                             .email("adam@gmail.com")
                             .username("4d4m")
                             .password(passwordEncoder.encode("password1"))
-                            .avatar(getBinaryImage("C:\\Users\\Kacper\\Desktop\\man-with-beard-avatar-character-isolated-icon-free-vector.jpg"))
+                            .avatar(getBinaryImage("https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=740"))
                             .roleType(RoleType.USER)
                             .build()
             );
@@ -68,7 +67,7 @@ public class TweetAppApplication {
                             .email("maria@gmail.com")
                             .username("m4ria")
                             .password(passwordEncoder.encode("password2"))
-                            .avatar(getBinaryImage("C:\\Users\\Kacper\\Desktop\\beautiful-latin-woman-avatar-character-icon-free-vector.jpg"))
+                            .avatar(getBinaryImage("https://img.freepik.com/premium-vector/woman-avatar-profile-round-icon_24640-14047.jpg?w=740"))
                             .roleType(RoleType.USER)
                             .build()
             );
@@ -81,7 +80,7 @@ public class TweetAppApplication {
                             .email("bozena@gmail.com")
                             .username("b0zen4")
                             .password(passwordEncoder.encode("password3"))
-                            .avatar(getBinaryImage("C:\\Users\\Kacper\\Desktop\\istockphoto-1331329483-170667a.jpg"))
+                            .avatar(getBinaryImage("https://img.freepik.com/premium-vector/woman-avatar-profile-round-icon_24640-14042.jpg?w=740"))
                             .roleType(RoleType.USER)
                             .build()
             );
@@ -162,11 +161,12 @@ public class TweetAppApplication {
 
     private Binary getBinaryImage(String path) {
         try {
-            File file = Paths.get(path).toFile();
-            byte[] bytes = Files.readAllBytes(file.toPath());
-            return new Binary(bytes);
+            URL url = new URL(path);
+            InputStream is = url.openStream();
+            return new Binary(is.readAllBytes());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException();
+            // return new Binary();
         }
     }
 }
