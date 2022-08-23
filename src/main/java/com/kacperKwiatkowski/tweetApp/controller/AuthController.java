@@ -18,7 +18,7 @@ class AuthController {
 
     @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    UserDto register(@Valid @ModelAttribute RegisterUserDto userToRegister) {
+    UserDto register(@ModelAttribute @Valid RegisterUserDto userToRegister) {
         return authService.registerUser(userToRegister);
     }
 

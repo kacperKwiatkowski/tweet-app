@@ -28,7 +28,6 @@ public class RegisterUserDto {
     @NotEmpty(message = "Can't be empty")
     private String username;
 
-    //    @NotEmpty(message = "Can't be empty")
     private MultipartFile avatar;
 
     @NotEmpty(message = "Can't be empty")
