@@ -3,6 +3,7 @@ package com.kacperKwiatkowski.tweetApp.dto.tweet;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Builder
@@ -12,6 +13,8 @@ import java.util.UUID;
 @Setter
 public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
+    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
+
     private UUID tweetId;
     private String username;
     private String firstName;
@@ -20,13 +23,15 @@ public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
     private String title;
     private String message;
     private Long likeCount;
-    private LocalDateTime postDateTime;
+    private String postDateTime;
     private UUID threadId;
 
     @Override
     public int compareTo(ExtendedTweetDto o) {
-        if (this.postDateTime.isAfter(o.postDateTime)) return 1;
-        if (this.postDateTime.isBefore(o.postDateTime)) return -1;
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN))))
+            return 1;
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN))))
+            return -1;
         else return 0;
     }
 }

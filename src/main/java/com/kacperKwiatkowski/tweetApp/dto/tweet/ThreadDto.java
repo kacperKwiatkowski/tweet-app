@@ -2,6 +2,8 @@ package com.kacperKwiatkowski.tweetApp.dto.tweet;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +14,8 @@ import java.util.List;
 @Getter
 @Setter
 public class ThreadDto implements Comparable<ThreadDto> {
+
+    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
 
     private List<ExtendedTweetDto> tweets;
 
@@ -30,8 +34,14 @@ public class ThreadDto implements Comparable<ThreadDto> {
 
     @Override
     public int compareTo(ThreadDto o) {
-        if (this.getTweets().get(0).getPostDateTime().isBefore(o.getTweets().get(0).getPostDateTime())) return 1;
-        if (this.getTweets().get(0).getPostDateTime().isAfter(o.getTweets().get(0).getPostDateTime())) return -1;
+        if (LocalDateTime.parse(this.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN))))
+            return 1;
+        if (LocalDateTime.parse(this.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN))))
+            return -1;
         else return 0;
     }
+
+
+
+
 }
