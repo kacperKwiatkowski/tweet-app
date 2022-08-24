@@ -14,12 +14,18 @@ public class UserValidatorFacade {
     private final UserValidator userValidator;
     private final ValidatorUtil validatorUtil;
 
-    public void validateUserRegisterAction(RegisterUserDto userToValidate){
+    public void validateUserRegisterAction(RegisterUserDto userToValidate) {
         verifyExceptionMessages(validatorUtil.gatherExceptionMessages(List.of(
                 userValidator.checkIfUserExistsByUsername(userToValidate.getUsername()),
                 userValidator.checkIfUserExistsByEmail(userToValidate.getEmail()),
                 userValidator.checkIfPasswordAndPasswordConfirmAreValid(userToValidate.getPassword(), userToValidate.getPasswordConfirm())
         )));
+    }
+
+    public void validateUserForgotPassword(String username) {
+        verifyExceptionMessages(validatorUtil.gatherExceptionMessages(List.of(
+                userValidator.checkIfUserDoesntExistsByUsername(username))
+        ));
     }
 
     private void verifyExceptionMessages(List<String> existingValidationMessages) {

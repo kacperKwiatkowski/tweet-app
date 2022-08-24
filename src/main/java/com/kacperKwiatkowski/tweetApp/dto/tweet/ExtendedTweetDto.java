@@ -28,10 +28,11 @@ public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
     @Override
     public int compareTo(ExtendedTweetDto o) {
-        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN))))
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN)))) {
             return 1;
-        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN))))
+        }
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN)))) {
             return -1;
-        else return 0;
+        } else return 0;
     }
 }

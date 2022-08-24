@@ -4,6 +4,9 @@ server:
 
 spring:
 
+  config:
+    import: file:env.properties
+
   main:
     banner-mode: off
 
@@ -29,6 +32,9 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: "default"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   mvc:
     pathmatch:
@@ -40,3 +46,11 @@ application:
     secret-key: securesecuresecuresecuresecuresecuresecure
     token-prefix: Bearer
     token-expiration-after-days: 14
+
+topic:
+  forgottenPassword: user.password.forgotten
+
+mail:
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+

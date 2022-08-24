@@ -24,7 +24,7 @@ class AuthController {
 
     @GetMapping("/{username}/forgot")
     void forgotPassword(@PathVariable String username) {
-
+        authService.forgotPassword(username);
     }
 
     @GetMapping("/logged")
