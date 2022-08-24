@@ -19,7 +19,7 @@ public class TweetObjectProvider {
                 .tweetId(UUID.randomUUID())
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
-                .postDateTime(LocalDateTime.now())
+                .postDateTime(LocalDateTime.now().toString())
                 .threadId(UUID.randomUUID())
                 .build();
     }
@@ -44,7 +44,7 @@ public class TweetObjectProvider {
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
                 .likeCount(Long.MIN_VALUE)
-                .postDateTime(LocalDateTime.now())
+                .postDateTime(LocalDateTime.now().toString())
                 .threadId(UUID.randomUUID())
                 .build();
     }

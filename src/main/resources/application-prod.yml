@@ -4,9 +4,6 @@ server:
 
 spring:
 
-  config:
-    import: file:env.properties
-
   main:
     banner-mode: off
 
@@ -25,7 +22,7 @@ spring:
       password: mongo_password
       database: mongo-tweets
       port: 27017
-      host: localhost
+      host: mongo-tweets
 
   kafka:
     consumer:
