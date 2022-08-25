@@ -22,7 +22,7 @@ public class UserEntity {
     private String lastName;
     private String email;
     private String username;
-    //TODO create logic for avatar
+    private String contactNumber;
     private Binary avatar;
     private String password;
     private RoleType roleType;

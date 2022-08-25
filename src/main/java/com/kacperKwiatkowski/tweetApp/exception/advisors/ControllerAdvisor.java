@@ -41,7 +41,6 @@ public class ControllerAdvisor {
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ValidationReport> bindExceptionHandler(BindException e) {
 
-
         List<String> exceptionMessages = e.getFieldErrors().stream()
                 .map(error -> "Incorrect value for field: " + error.getField())
                 .toList();

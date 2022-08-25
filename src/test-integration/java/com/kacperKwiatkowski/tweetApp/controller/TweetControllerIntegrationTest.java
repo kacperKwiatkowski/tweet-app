@@ -3,8 +3,10 @@ package com.kacperKwiatkowski.tweetApp.controller;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.CreateTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.ExtendedTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
+import com.kacperKwiatkowski.tweetApp.dto.tweet.WallDto;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
+import com.kacperKwiatkowski.tweetApp.repository.LikeRepository;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.util.JwtTokenProvider;
@@ -46,12 +48,15 @@ class TweetControllerIntegrationTest {
     private TweetRepository tweetRepository;
 
     @Autowired
+    private LikeRepository likeRepository;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private WebTestClient webTestClient;
 
-    @AfterAll
+    @AfterEach
     void cleanUp() {
         userRepository.deleteAll();
         tweetRepository.deleteAll();
@@ -67,18 +72,18 @@ class TweetControllerIntegrationTest {
         tweetRepository.save(persistedTweet);
 
         // when
-        EntityExchangeResult<List<ExtendedTweetDto>> result = webTestClient.get()
+        EntityExchangeResult<WallDto> result = webTestClient.get()
                 .uri("/all")
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
-                .expectBodyList(ExtendedTweetDto.class)
+                .expectBody(WallDto.class)
                 .returnResult();
 
         // then
         assertNotNull(result);
         assertNotNull(result.getResponseBody());
         assertEquals(HttpStatus.OK, result.getStatus());
-        assertTrue(comparePersistedTweetEntityToResponseBody(persistedTweet, result.getResponseBody()));
+        assertTrue(comparePersistedTweetEntityToResponseBody(persistedTweet, result.getResponseBody().getThreads().get(0).getTweets()));
     }
 
     @Test
@@ -198,12 +203,11 @@ class TweetControllerIntegrationTest {
         assertTrue(persistedTweet.isPresent());
         assertEquals(tweetUpdateDto.getTitle(), result.getResponseBody().getTitle(), persistedTweet.get().getTitle());
         assertEquals(tweetUpdateDto.getMessage(), result.getResponseBody().getMessage(), persistedTweet.get().getMessage());
-//        assertEquals(tweetToCreate.getPostDateTime(), result.getResponseBody().getPostDateTime(), persistedTweet.get().getPostDateTime());
     }
 
     @Test
     @Order(5)
-    void shouldDeleteTweetWith200StatusCode() throws ServletException, IOException {
+    void shouldDeleteTweetWith200StatusCode() {
         // given
         UserEntity tweetOwner = UserObjectProvider.provideUserEntity();
         tweetOwner.setUsername(USERNAME);
@@ -236,7 +240,7 @@ class TweetControllerIntegrationTest {
         tweetRepository.save(tweetToIncreaseLikeCount);
 
         // when
-        EntityExchangeResult<ExtendedTweetDto> result = webTestClient.put()
+        webTestClient.put()
                 .uri("/" + USERNAME + "/like/" + tweetToIncreaseLikeCount.getTweetId())
                 .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
                 .exchange()
@@ -245,10 +249,8 @@ class TweetControllerIntegrationTest {
 
         // then
         Optional<TweetEntity> tweetFromRepository = tweetRepository.findById(tweetToIncreaseLikeCount.getTweetId());
-        assertNotNull(result);
-        assertNotNull(result.getResponseBody());
         assertTrue(tweetFromRepository.isPresent());
-        assertEquals(tweetFromRepository.get().getTweetId(), result.getResponseBody().getTweetId());
+        assertTrue(likeRepository.existsByUsernameAndTweetId(USERNAME, tweetToIncreaseLikeCount.getTweetId()));
     }
 
     @Test

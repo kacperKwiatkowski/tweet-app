@@ -4,6 +4,12 @@ server:
 
 spring:
 
+  config:
+    import: file:env.properties
+
+  codec:
+    max-in-memory-size: 10MB
+
   main:
     banner-mode: off
 
@@ -35,3 +41,10 @@ application:
     secret-key: securesecuresecuresecuresecuresecuresecure
     token-prefix: Bearer
     token-expiration-after-days: 14
+
+topic:
+  forgottenPassword: user.password.forgotten
+
+mail:
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}

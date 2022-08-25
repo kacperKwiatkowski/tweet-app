@@ -4,12 +4,18 @@ package com.kacperKwiatkowski.tweetApp.mapper;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
+import com.kacperKwiatkowski.tweetApp.service.AvatarService;
 import com.kacperKwiatkowski.tweetApp.util.UserObjectProvider;
+import lombok.SneakyThrows;
+import org.bson.types.Binary;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,6 +24,14 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserMapperTest {
+
+    public static final MockMultipartFile MOCK_AVATAR = new MockMultipartFile("mock.tmp", "MOCK".getBytes());
+
+    @Spy
+    ModelMapper modelMapper = new ModelMapper();
+
+    @Mock
+    private AvatarService avatarService;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -41,11 +55,13 @@ class UserMapperTest {
         assertEquals(userToMap.getUsername(), mappedUser.getUsername());
     }
 
+    @SneakyThrows
     @Test
     void shouldMapRegisterUserDtoToEntity() {
         // given
         RegisterUserDto userToMap = UserObjectProvider.provideRegisterUserDto();
         when(passwordEncoder.encode(any())).thenReturn(userToMap.getPassword());
+        when(avatarService.addAvatar(any())).thenReturn(new Binary(userToMap.getAvatar().getBytes()));
 
         // when
         UserEntity mappedUser = userMapper.fromRegisterUserDtoToEntity(userToMap);
@@ -55,7 +71,6 @@ class UserMapperTest {
         assertEquals(userToMap.getLastName(), mappedUser.getLastName());
         assertEquals(userToMap.getEmail(), mappedUser.getEmail());
         assertEquals(userToMap.getUsername(), mappedUser.getUsername());
-        assertEquals(userToMap.getAvatar(), mappedUser.getAvatar());
         assertEquals(userToMap.getPassword(), mappedUser.getPassword());
     }
 }

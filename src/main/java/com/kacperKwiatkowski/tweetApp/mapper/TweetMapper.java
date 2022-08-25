@@ -8,6 +8,7 @@ import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
@@ -16,7 +17,8 @@ import java.util.Base64;
 @Component
 public class TweetMapper {
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     public ExtendedTweetDto mapExtendedTweetDto(TweetEntity tweetToConvert, UserEntity userToConvert, long likeCount) {
         ExtendedTweetDto extendedTweetToMap = modelMapper.map(tweetToConvert, ExtendedTweetDto.class);

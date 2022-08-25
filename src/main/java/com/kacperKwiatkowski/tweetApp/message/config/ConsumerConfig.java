@@ -9,8 +9,8 @@ import org.springframework.kafka.annotation.EnableKafka;
 @Configuration
 public class ConsumerConfig {
 
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+//    @Bean
+//    public ModelMapper modelMapper() {
+//        return new ModelMapper();
+//    }
 }

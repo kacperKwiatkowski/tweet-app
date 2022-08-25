@@ -6,6 +6,7 @@ import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import com.kacperKwiatkowski.tweetApp.service.AvatarService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,8 @@ public class UserMapper {
     private final AvatarService avatarService;
     private final PasswordEncoder passwordEncoder;
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     public UserDto fromEntityToUserDto(UserEntity userToConvert) {
         UserDto convertedUser = modelMapper.map(userToConvert, UserDto.class);
