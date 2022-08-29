@@ -16,16 +16,15 @@ public class MailService {
     @Autowired
     private AuthMapper authMapper;
 
-    public void remindPassword(String password) {
+    public void remindPassword(String jsonRegisterUserDto) {
 
-        ForgotPasswordDto forgotPasswordDto = authMapper.mapStringToForgottenPasswordDto(password);
+        ForgotPasswordDto forgotPasswordDto = authMapper.mapStringToForgottenPasswordDto(jsonRegisterUserDto);
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@baeldung.com");
+        message.setFrom("kacper.kwiatkowski.cognizant@gmail.com");
         message.setTo("kacper18k@gmail.com");
-        message.setSubject("SUB");
+        message.setSubject("PASSWORD RESET");
         message.setText("Username: " + forgotPasswordDto.getUsername() + "\n" + "New password: " + forgotPasswordDto.getPassword());
         emailSender.send(message);
-
     }
 }

@@ -11,17 +11,24 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 
 @AllArgsConstructor
 @Component
 public class TweetMapper {
 
+    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
+
     @Autowired
     private ModelMapper modelMapper;
 
     public ExtendedTweetDto mapExtendedTweetDto(TweetEntity tweetToConvert, UserEntity userToConvert, long likeCount) {
         ExtendedTweetDto extendedTweetToMap = modelMapper.map(tweetToConvert, ExtendedTweetDto.class);
+
+        extendedTweetToMap.setPostDateTime(tweetToConvert.getPostDateTime().format(DateTimeFormatter.ofPattern(PATTERN)));
+
         extendedTweetToMap.setFirstName(userToConvert.getFirstName());
         extendedTweetToMap.setLastName(userToConvert.getLastName());
         extendedTweetToMap.setUsername(userToConvert.getUsername());

@@ -83,6 +83,23 @@ public class TweetService {
     public void deleteTweet(String username, UUID id) {
         tweetValidatorFacade.validateTweetDeleteAction(username, id);
 
+        TweetEntity tweetToDelete = tweetRepository.findById(id).get();
+
+        if(tweetRepository.existsByThreadIdAndPostDateTimeBefore(tweetToDelete.getThreadId(), tweetToDelete.getPostDateTime())){
+            deleteTweet(id);
+        } else {
+            deleteThread(tweetToDelete.getThreadId());
+        }
+    }
+
+    private void deleteThread(UUID threadId) {
+        List<UUID> tweetIdsToDelete = tweetRepository.findAllByThreadId(threadId).stream().map(TweetEntity::getTweetId).toList();
+        likeService.deleteAllByTweetIds(tweetIdsToDelete);
+        tweetRepository.deleteAllById(tweetIdsToDelete);
+    }
+
+    private void deleteTweet(UUID id) {
+        likeService.deleteAllByTweetId(id);
         tweetRepository.deleteById(id);
     }
 

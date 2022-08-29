@@ -15,14 +15,16 @@ import java.util.UUID;
 @Setter
 @Document("tweets")
 public class TweetEntity {
+
     private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
+
     @Id
     private UUID tweetId;
     private String username;
     private String avatar;
     private String title;
     private String message;
-    private String postDateTime;
+    private LocalDateTime postDateTime;
     private UUID threadId;
 
     public TweetEntity assignNewTweetData() {
@@ -37,7 +39,7 @@ public class TweetEntity {
     }
 
     public TweetEntity assignPostTime() {
-        this.postDateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN));
+        this.postDateTime = LocalDateTime.now();
         return this;
     }
 }
