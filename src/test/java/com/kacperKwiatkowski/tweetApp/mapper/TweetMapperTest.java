@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,8 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RunWith(SpringRunner.class)
 class TweetMapperTest {
 
+    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
+
     private static final String USERNAME = "USERNAME";
-    private static final UUID TWEET_ID = UUID.randomUUID();
 
     @Spy
     ModelMapper modelMapper = new ModelMapper();
@@ -44,7 +46,7 @@ class TweetMapperTest {
         assertEquals(tweetToMap.getTweetId(), mappedTweet.getTweetId());
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
+        assertEquals(tweetToMap.getPostDateTime().toString(), mappedTweet.getPostDateTime());
         assertEquals(tweetToMap.getThreadId(), mappedTweet.getThreadId());
     }
 
@@ -54,13 +56,13 @@ class TweetMapperTest {
         ExtendedTweetDto tweetToMap = TweetObjectProvider.providePersistedTweetDto();
 
         // when
-        TweetEntity mappedTweet = tweetMapper.fromPersistedDtoToEntity(tweetToMap);
+        TweetEntity mappedTweet = tweetMapper.fromExtendedDtoToEntity(tweetToMap);
 
         // then
         assertEquals(tweetToMap.getTweetId(), mappedTweet.getTweetId());
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
+        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime().format(DateTimeFormatter.ofPattern(PATTERN)));
         assertEquals(tweetToMap.getThreadId(), mappedTweet.getThreadId());
     }
 

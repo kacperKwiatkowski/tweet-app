@@ -41,8 +41,10 @@ public class TweetMapper {
         return modelMapper.map(tweetToConvert, ExtendedTweetDto.class);
     }
 
-    public TweetEntity fromPersistedDtoToEntity(ExtendedTweetDto tweetToConvert) {
-        return modelMapper.map(tweetToConvert, TweetEntity.class);
+    public TweetEntity fromExtendedDtoToEntity(ExtendedTweetDto tweetToConvert) {
+        TweetEntity tweetToMap = modelMapper.map(tweetToConvert, TweetEntity.class);
+        tweetToMap.setPostDateTime(LocalDateTime.parse(tweetToConvert.getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN)));
+        return tweetToMap;
     }
 
     public TweetEntity fromCreateDtoToEntity(String username, CreateTweetDto tweetToConvert) {

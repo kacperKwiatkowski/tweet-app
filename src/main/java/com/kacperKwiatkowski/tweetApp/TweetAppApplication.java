@@ -6,6 +6,7 @@ import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.Binary;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+@Slf4j
 @SpringBootApplication
 @EnableMongoRepositories
 @AllArgsConstructor
@@ -162,6 +164,9 @@ public class TweetAppApplication {
                             .threadId(UUID.randomUUID())
                             .build()
             );
+
+            userRepository.findAll().forEach(user -> log.info(user.toString()));
+            tweetRepository.findAll().forEach(tweet -> log.info(tweet.toString()));
         };
     }
 

@@ -22,7 +22,7 @@ public class TweetObjectProvider {
                 .tweetId(UUID.randomUUID())
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
-                .postDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN)))
+                .postDateTime(LocalDateTime.now())
                 .threadId(UUID.randomUUID())
                 .build();
     }
