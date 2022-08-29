@@ -11,7 +11,7 @@ spring:
     banner-mode: off
 
   application:
-    name: TWEET-SERVICE
+    name: tweet-service
 
   servlet:
     multipart:
