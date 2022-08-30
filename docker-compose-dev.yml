@@ -63,66 +63,12 @@ services:
     depends_on:
       - kafka-tweets
 
-#  elasticsearch-tweets:
-#    image: elasticsearch:7.12.0
-#    container_name: elasticsearch-tweets
-#    restart: always
-#    volumes:
-#      - elasticsearch-data:/usr/share/elasticsearch/data
-#    environment:
-#      - discovery.type=single-node
-#      - bootstrap.memory_lock=true
-#      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-#      - ELASTIC_USERNAME=elastic
-#      - ELASTIC_PASSWORD=changeme
-#      - xpack.security.enabled=false
-#    ulimits:
-#      memlock:
-#        soft: -1
-#        hard: -1
-#    ports:
-#      - '9200:9200'
-#    networks:
-#      - elastic-network
-#
-#  logstash-tweets:
-#    image: logstash:7.12.0
-#    container_name: logstash-tweets
-#    restart: always
-#    command: logstash -f /etc/logstash/conf.d/logstash.conf
-#    volumes:
-#      - ./config:/etc/logstash/conf.d
-#    depends_on:
-#      - elasticsearch-tweets
-#    ports:
-#      - '5000:5000'
-#    environment:
-#      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-#    networks:
-#      - elastic-network
-#
-#  kibana-tweets:
-#    image: kibana:7.12.0
-#    container_name: kibana-tweets
-#    restart: always
-#    ports:
-#      - '5601:5601'
-#    environment:
-#      - ELASTICSEARCH_USERNAME=elastic
-#      - ELASTICSEARCH_PASSWORD=changeme
-#      - ELASTICSEARCH_URL=http://elasticsearch-tweets:9200
-#      - ELASTICSEARCH_HOSTS=http://elasticsearch-tweets:9200
-#    depends_on:
-#      - elasticsearch-tweets
-#    networks:
-#      - elastic-network
-
-  Elasticsearch:
+  elasticsearch-tweets:
     image: elasticsearch:7.16.2
-    container_name: elasticsearch
+    container_name: elasticsearch-tweets
     restart: always
     volumes:
-      - elastic_data:/usr/share/elasticsearch/data/
+      - elastic-data:/usr/share/elasticsearch/data/
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       discovery.type: single-node
@@ -132,47 +78,40 @@ services:
     ports:
       - '9200:9200'
     networks:
-      - elk
+      - elastic-network
 
-  Logstash:
+  logstash-tweets:
     image: logstash:7.16.2
-    container_name: logstash
+    container_name: logstash-tweets
     restart: always
     volumes:
       - ./config:/etc/logstash/conf.d
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     depends_on:
-      - Elasticsearch
+      - elasticsearch-tweets
     ports:
       - '5000:5000'
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      - elk
+      - elastic-network
 
-  Kibana:
+  kibana-tweets:
     image: kibana:7.16.2
-    container_name: kibana
+    container_name: kibana-tweets
     restart: always
     ports:
       - '5601:5601'
     environment:
-      - ELASTICSEARCH_URL=http://elasticsearch:9200
+      ELASTICSEARCH_URL: http://elasticsearch-tweets:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch-tweets:9200"]'
     depends_on:
-      - Elasticsearch
+      - elasticsearch-tweets
     networks:
-      - elk
+      - elastic-network
 
 volumes:
-  elastic_data: {}
+  elastic-data: {}
 
 networks:
-  elk:
-
-#volumes:
-#  elasticsearch-data:
-#    driver: local
-#
-#networks:
-#  elastic-network:
-#    driver: bridge
+  elastic-network:
