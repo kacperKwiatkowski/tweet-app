@@ -21,7 +21,7 @@ public class Consumer {
     }
 
     @KafkaListener(topics = TOPIC_FORGOTTEN_PASSWORD)
-    public void consumeUserMessage(String message) throws JsonProcessingException {
+    public void consumeUserMessage(String message) {
         mailService.remindPassword(message);
     }
 }

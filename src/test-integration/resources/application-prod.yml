@@ -3,27 +3,25 @@ server:
     context-path: /api/v.1.0/tweets
 
 spring:
+  #
+  #  config:
+  #    import: file:env.properties
 
-  config:
-    import: file:env.properties
+  codec:
+    max-in-memory-size: 10MB
 
   main:
     banner-mode: off
 
   application:
-    name: tweet-service
-
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 11MB
+    name: TWEET-SERVICE
 
   data:
     mongodb:
       authentication-database: admin
       username: mongo_username
       password: mongo_password
-      database: mongo-tweets
+      database: tweets
       port: 27017
       host: localhost
 
@@ -32,9 +30,6 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       group-id: "default"
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
   mvc:
     pathmatch:
@@ -53,4 +48,3 @@ topic:
 mail:
   username: ${MAIL_USERNAME}
   password: ${MAIL_PASSWORD}
-

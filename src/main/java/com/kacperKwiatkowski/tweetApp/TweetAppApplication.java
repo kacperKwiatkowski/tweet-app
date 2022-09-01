@@ -6,6 +6,7 @@ import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.bson.types.Binary;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+@Slf4j
 @SpringBootApplication
 @EnableMongoRepositories
 @AllArgsConstructor
@@ -100,7 +102,7 @@ public class TweetAppApplication {
                                         .tweetId(UUID.randomUUID())
                                         .title("TITLE_" + staticTitleCount++)
                                         .message("MESSAGE_" + staticMessageCount++)
-                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++).format(DateTimeFormatter.ofPattern(PATTERN)))
+                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("4d4m")
                                         .threadId(UUID.randomUUID())
                                         .build()
@@ -111,7 +113,7 @@ public class TweetAppApplication {
                                         .tweetId(UUID.randomUUID())
                                         .title("TITLE_" + staticTitleCount++)
                                         .message("MESSAGE_" + staticMessageCount++)
-                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++).format(DateTimeFormatter.ofPattern(PATTERN)))
+                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("m4ria")
                                         .threadId(thread1)
                                         .build()
@@ -122,7 +124,7 @@ public class TweetAppApplication {
                                         .tweetId(UUID.randomUUID())
                                         .title("TITLE_" + staticTitleCount++)
                                         .message("MESSAGE_" + staticMessageCount++)
-                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++).format(DateTimeFormatter.ofPattern(PATTERN)))
+                                        .postDateTime(LocalDateTime.now().minusDays(staticDaysMinusCount++))
                                         .username("b0zen4")
                                         .threadId(thread1)
                                         .build()
@@ -135,7 +137,7 @@ public class TweetAppApplication {
                             .tweetId(UUID.randomUUID())
                             .title("TITLE_" + staticTitleCount++)
                             .message("MESSAGE_" + staticMessageCount++)
-                            .postDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN)))
+                            .postDateTime(LocalDateTime.now())
                             .username("4d4m")
                             .threadId(thread1)
                             .build()
@@ -146,7 +148,7 @@ public class TweetAppApplication {
                             .tweetId(UUID.randomUUID())
                             .title("TITLE_" + staticTitleCount++)
                             .message("MESSAGE_" + staticMessageCount++)
-                            .postDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN)))
+                            .postDateTime(LocalDateTime.now())
                             .username("4d4m")
                             .threadId(thread1)
                             .build()
@@ -157,11 +159,14 @@ public class TweetAppApplication {
                             .tweetId(UUID.randomUUID())
                             .title("TITLE_" + staticTitleCount++)
                             .message("SHOULD BE FIRST")
-                            .postDateTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern(PATTERN)))
+                            .postDateTime(LocalDateTime.now())
                             .username("m4ria")
                             .threadId(UUID.randomUUID())
                             .build()
             );
+
+            userRepository.findAll().forEach(user -> log.info(user.toString()));
+            tweetRepository.findAll().forEach(tweet -> log.info(tweet.toString()));
         };
     }
 
