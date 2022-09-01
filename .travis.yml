@@ -1,7 +1,11 @@
-language: java
-sudo: true
-dist: trusty
-script: mvn clean verify
-before_script:
-  - chmod x ./mvnw
+sudo: required
 
+services:
+  - docker
+
+before_install:
+  - mvn clean package -Dskip Tests
+  - docker build -t kacperkwiatkowski/ -f Dockerfile .
+
+script:
+  - docker images
