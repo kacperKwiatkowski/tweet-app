@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+
+  mongo-tweets:
+    image: mongo
+    container_name: mongo-tweets
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_username
+      MONGO_INITDB_ROOT_PASSWORD: mongo_password
+
+  zookeeper-tweets:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper-tweets
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    ports:
+      - "2181:2181"
+    restart: "no"
+
+  kafka-tweets:
+    image: bitnami/kafka:latest
+    container_name: kafka-tweets
+    environment:
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER_INTERNAL:PLAINTEXT,DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_LISTENERS: DOCKER_INTERNAL://:29092,DOCKER_EXTERNAL://:9092
+      KAFKA_ADVERTISED_LISTENERS: DOCKER_INTERNAL://kafka-tweets:29092,DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper-tweets:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    restart: "no"
+    depends_on:
+      - zookeeper-tweets
