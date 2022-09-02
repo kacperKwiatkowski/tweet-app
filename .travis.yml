@@ -1,12 +1,16 @@
 sudo: required
 
+language: java
+
+jdk: oraclejdk17
+
 services:
   - docker
 
 before_install:
   - echo %JAVA_HOME%
   - echo $JAVA_HOME
-  - ./mvnw clean package
+  - mvn clean package
   - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
 
 script:
