@@ -8,9 +8,10 @@ services:
   - docker
 
 before_install:
+  - docker-compose up -d mongo-tweets
   - mvn clean package -DskipTests=true
   - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
-  - docker-compose up
+  - mvn test
 
 script:
   - docker images
