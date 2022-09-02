@@ -8,9 +8,8 @@ services:
   - docker
 
 before_install:
-  - echo %JAVA_HOME%
-  - echo $JAVA_HOME
-  - mvn clean package
+  - docker-compose up
+  - mvn clean package -DskipTests
   - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
 
 script:
