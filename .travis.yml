@@ -5,6 +5,7 @@ services:
 
 before_install:
   - echo %JAVA_HOME%
+  - echo $JAVA_HOME
   - mvn clean package
   - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
 
