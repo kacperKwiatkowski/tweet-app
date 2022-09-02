@@ -8,9 +8,9 @@ services:
   - docker
 
 before_install:
-  - docker compose up
-  - mvn clean package -DskipTests
+  - mvn clean package -DskipTests=true
   - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
+  - docker-compose build up
 
 script:
   - docker images
