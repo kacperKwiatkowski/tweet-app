@@ -38,6 +38,7 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       ALLOW_PLAINTEXT_LISTENER: "yes"
+      KAFKA_HEAP_OPTS: "-Xmx256M -Xms256M"
     ports:
       - "9092:9092"
       - "29092:29092"
