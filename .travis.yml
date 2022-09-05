@@ -20,7 +20,7 @@ deploy:
   app: tweet-app-complete
   env: Tweetappcomplete-env
   bucket_name: elasticbeanstalk-eu-central-1-007555715517
-  bucket_path: tweet-app
+  bucket_path: tweet-app-complete
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
