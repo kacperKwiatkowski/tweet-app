@@ -8,24 +8,19 @@ services:
   - docker
 
 before_install:
-  - echo $MAIL_USERNAME=$MAIL_USERNAME
-  - echo $MAIL_USERNAME=$MAIL_PASSWORD
   - chmod +x mvnw
   - docker-compose -f "docker-compose-test.yml" up -d
 
 script:
   - mvn clean package
-  - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
 
-
-#docker compose -f "docker-compose-prod.yml" build --build-arg "MAIL_USERNAME=kacper.kwiatkowski.cognizant@gmail.com" --build-arg "MAIL_PASSWORD=sdxoujxpdyoytduu"
 deploy:
   provider: elasticbeanstalk
   region: eu-central-1
-  app: tweet-app
-  env: Tweetapp-env
+  app: tweet-app-complete
+  env: Tweetappcomplete-env
   bucket_name: elasticbeanstalk-eu-central-1-007555715517
-  bucket_path: tweet-app
+  bucket_path: tweet-app-complete
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
