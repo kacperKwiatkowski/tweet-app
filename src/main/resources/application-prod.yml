@@ -48,6 +48,6 @@ topic:
   forgottenPassword: user.password.forgotten
 
 mail:
-  username: ${MAIL_USERNAME}
-  password: ${MAIL_PASSWORD}
+  username: mock
+  password: mock
 

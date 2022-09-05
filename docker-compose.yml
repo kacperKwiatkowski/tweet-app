@@ -48,6 +48,8 @@ services:
       dockerfile: Dockerfile
     environment:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka-tweets:29092"
+      MAIL_USERNAME: mock
+      MAIL_PASSWORD: mock
     ports:
       - "8080:8080"
     depends_on:
