@@ -1,7 +1,5 @@
 package com.kacperKwiatkowski.tweetApp.service;
 
-import com.google.gson.Gson;
-import com.kacperKwiatkowski.tweetApp.dto.auth.ForgotPasswordDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.mapper.UserMapper;
@@ -9,7 +7,6 @@ import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.validator.UserValidatorFacade;
 import lombok.AllArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,18 +24,18 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
 
-    private KafkaTemplate<String, String> kafkaTemplate;
+//    private KafkaTemplate<String, String> kafkaTemplate;
+//
+public UserDto registerUser(RegisterUserDto userToRegister) {
+    userValidatorFacade.validateUserRegisterAction(userToRegister);
 
-    public UserDto registerUser(RegisterUserDto userToRegister) {
-        userValidatorFacade.validateUserRegisterAction(userToRegister);
-
-        return userMapper.fromEntityToUserDto(
-                userRepository.save(
-                        userMapper.fromRegisterUserDtoToEntity(userToRegister)
-                                .assignUserId()
-                                .assignRole()
-                )
-        );
+    return userMapper.fromEntityToUserDto(
+            userRepository.save(
+                    userMapper.fromRegisterUserDtoToEntity(userToRegister)
+                            .assignUserId()
+                            .assignRole()
+            )
+    );
     }
 
     public void forgotPassword(String username) {
@@ -50,7 +47,7 @@ public class AuthService {
         userToRemindPassword.setPassword(passwordEncoder.encode(tempPassword));
         userRepository.save(userToRemindPassword);
 
-        kafkaTemplate.send(TOPIC_FORGOTTEN_PASSWORD, new Gson().toJson(new ForgotPasswordDto(username, tempPassword)));
+//        kafkaTemplate.send(TOPIC_FORGOTTEN_PASSWORD, new Gson().toJson(new ForgotPasswordDto(username, tempPassword)));
     }
 
     public UserDto getLoggedInUser() {
