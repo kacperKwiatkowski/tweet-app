@@ -14,3 +14,15 @@ before_install:
   - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
 script:
   - docker images
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-central-1
+  app: tweet-app
+  env: Tweetapp-env
+  bucket_name: elasticbeanstalk-eu-central-1-007555715517
+  bucket_path: tweet-app
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
