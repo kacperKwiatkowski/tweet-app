@@ -1,9 +1,19 @@
+FROM maven:3.8.3-openjdk-17-slim AS build
+
+RUN mkdir /project
+
+COPY . /project
+
+WORKDIR /project
+
+RUN mvn -DskipTests=true clean package
+
 FROM openjdk:17-oracle
 
-WORKDIR '/app'
+RUN mkdir /app
 
-COPY ./target/tweetApp-0.0.1-SNAPSHOT.jar ./
+COPY --from=build /project/target/tweetApp-0.0.1-SNAPSHOT.jar /app/tweetApp-0.0.1-SNAPSHOT.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "tweetApp-0.0.1-SNAPSHOT.jar"]
+CMD java $JAVA_OPTS -jar -Dspring.profiles.active=prod /app/tweetApp-0.0.1-SNAPSHOT.jar
