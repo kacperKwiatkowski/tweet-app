@@ -8,13 +8,17 @@ services:
   - docker
 
 before_install:
+  - echo $MAIL_USERNAME
+  - echo $MAIL_PASSWORD
   - chmod +x mvnw
   - docker-compose -f "docker-compose-test.yml" up -d
   - mvn clean package
-  - docker build -t kacperkwiatkowski/backend-tweet -f Dockerfile .
+#  - docker build --build-arg MAIL_USERNAME=$MAIL_USERNAME --build-arg MAIL_PASSWORD=$MAIL_PASSWORD -t kacperkwiatkowski/backend-tweet -f Dockerfile .
 script:
   - docker images
 
+
+#docker compose -f "docker-compose-prod.yml" build --build-arg "MAIL_USERNAME=kacper.kwiatkowski.cognizant@gmail.com" --build-arg "MAIL_PASSWORD=sdxoujxpdyoytduu"
 deploy:
   provider: elasticbeanstalk
   region: eu-central-1
@@ -26,3 +30,5 @@ deploy:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
+  MAIL_USERNAME: $MAIL_USERNAME
+  MAIL_PASSWORD: $MAIL_PASSWORD
