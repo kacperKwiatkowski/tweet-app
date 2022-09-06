@@ -14,14 +14,7 @@ before_install:
 script:
   - mvn clean test
 
-deploy:
-  provider: elasticbeanstalk
-  region: eu-central-1
-  app: tweet-app-prod
-  env: tweet-env-prod
-  bucket_name: elasticbeanstalk-eu-central-1-007555715517
-  bucket_path: tweet-bucket-prod
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+after_success:
+  - docker build -t kacperkwiatkowski/backend-tweet ./Dockerfile
+  - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push kacperkwiatkowski/backend-tweet

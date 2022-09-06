@@ -18,11 +18,11 @@ spring:
   data:
     mongodb:
       authentication-database: admin
-      username: mongo_username
-      password: mongo_password
-      database: mongo-tweets
-      port: 27017
-      host: mongo-tweets
+      username: ${DB_USERNAME}
+      password: ${DB_PASSWORD}
+      database: ${DB_NAME}
+      port: ${DB_PORT}
+      host: ${DB_HOST}
 
   mvc:
     pathmatch:

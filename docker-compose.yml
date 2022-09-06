@@ -24,6 +24,11 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka-tweets:29092"
       MAIL_USERNAME: mock
       MAIL_PASSWORD: mock
+      DB_USERNAME: mongo_username
+      DB_PASSWORD: mongo_password
+      DB_NAME: mongo-tweets
+      DB_HOST: mongo-tweets
+      DB_PORT: 27017
     ports:
       - "8080:8080"
     depends_on:
