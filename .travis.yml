@@ -15,6 +15,6 @@ script:
   - mvn clean test
 
 after_success:
-  - docker build -t kacperkwiatkowski/backend-tweet ./Dockerfile
+  - docker build -t kacperkwiatkowski/backend-tweet ./
   - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_ID" --password-stdin
   - docker push kacperkwiatkowski/backend-tweet
