@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 @Service
@@ -16,7 +17,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream()
+        return StreamSupport.stream(userRepository.findAll().spliterator(), false)
+                .toList()
+                .stream()
                 .map(userMapper::fromEntityToUserDto)
                 .toList();
     }

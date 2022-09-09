@@ -9,23 +9,18 @@ import com.kacperKwiatkowski.tweetApp.util.JwtTokenProvider;
 import com.kacperKwiatkowski.tweetApp.util.TweetObjectProvider;
 import com.kacperKwiatkowski.tweetApp.util.UserObjectProvider;
 import com.kacperKwiatkowski.tweetApp.validator.ValidationReport;
-import org.apache.tomcat.jni.User;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.reactive.function.BodyInserters;
 
 import javax.servlet.ServletException;
-import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -69,48 +64,6 @@ class ControllerAdvisorIntegrationTest {
                     MediaType.MULTIPART_FORM_DATA_VALUE,
                     "MOCK".getBytes()
             );
-
-//    @Test
-//    @Order(1)
-//    void shouldHandleValidationResultForUsersByControllerAdvisorAndReturn400Status() throws ServletException, IOException {
-//        MockMultipartFile file
-//                = new MockMultipartFile(
-//                "file",
-//                "hello.png",
-//                MediaType.MULTIPART_FORM_DATA_VALUE,
-//                "Hello, World!".getBytes()
-//        );
-//
-//        // given
-//        UserEntity persistedUser = userRepository.save(UserObjectProvider.provideUserEntity());
-//
-//        RegisterUserDto duplicatedUser = userMapper.fromEntityToRegisterUserDto(persistedUser);
-//        duplicatedUser.setAvatar(file);
-//        duplicatedUser.setPasswordConfirm(UUID.randomUUID().toString());
-//
-//        // when
-//        EntityExchangeResult<ValidationReport> result = webTestClient.post()
-////                .uri("/register")
-//                .uri(uriBuilder -> uriBuilder
-//                        .path("/register")
-//                        .queryParam("userToRegister", duplicatedUser)
-//                        .build()
-//                )
-//                .contentType(MediaType.parseMediaType(MediaType.MULTIPART_FORM_DATA_VALUE))
-//                .header("Content-Type", "multipart/form-data")
-//                .header("Authorization", "Bearer " + jwtTokenProvider.provideToken())
-//                .bodyValue(duplicatedUser)
-//                .exchange()
-//                .expectBody(ValidationReport.class)
-//                .returnResult();
-//
-//        // then
-//        assertNotNull(result);
-//        assertNotNull(result.getResponseBody());
-//        assertEquals(HttpStatus.BAD_REQUEST, result.getStatus());
-//        assertEquals(USER_VALIDATION_FAILURE_MESSAGE, result.getResponseBody().validationFailureMessage);
-//    }
-//
 
     @Test
     @Order(1)

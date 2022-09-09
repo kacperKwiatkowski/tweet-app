@@ -32,7 +32,6 @@ public UserDto registerUser(RegisterUserDto userToRegister) {
     return userMapper.fromEntityToUserDto(
             userRepository.save(
                     userMapper.fromRegisterUserDtoToEntity(userToRegister)
-                            .assignUserId()
                             .assignRole()
             )
     );

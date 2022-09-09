@@ -5,12 +5,8 @@ import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
 import lombok.SneakyThrows;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.bson.types.Binary;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.util.UUID;
 
@@ -36,9 +32,9 @@ public class UserObjectProvider {
                 .contactNumber(randomFieldIndex)
                 .email(randomFieldIndex + EMAIL_SUFFIX)
                 .username(randomFieldIndex)
-                .avatar(new Binary(MOCK_AVATAR.getBytes()))
+                .avatar(MOCK_AVATAR.getBytes())
                 .password(randomFieldIndex)
-                .roleType(RoleType.USER)
+                .roleType(RoleType.USER.name())
                 .build();
     }
 

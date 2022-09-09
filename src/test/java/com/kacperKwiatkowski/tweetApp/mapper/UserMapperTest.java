@@ -4,10 +4,8 @@ package com.kacperKwiatkowski.tweetApp.mapper;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
-import com.kacperKwiatkowski.tweetApp.service.AvatarService;
 import com.kacperKwiatkowski.tweetApp.util.UserObjectProvider;
 import lombok.SneakyThrows;
-import org.bson.types.Binary;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,9 +27,6 @@ class UserMapperTest {
 
     @Spy
     ModelMapper modelMapper = new ModelMapper();
-
-    @Mock
-    private AvatarService avatarService;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -61,7 +56,6 @@ class UserMapperTest {
         // given
         RegisterUserDto userToMap = UserObjectProvider.provideRegisterUserDto();
         when(passwordEncoder.encode(any())).thenReturn(userToMap.getPassword());
-        when(avatarService.addAvatar(any())).thenReturn(new Binary(userToMap.getAvatar().getBytes()));
 
         // when
         UserEntity mappedUser = userMapper.fromRegisterUserDtoToEntity(userToMap);

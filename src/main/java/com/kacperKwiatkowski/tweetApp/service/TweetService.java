@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 @AllArgsConstructor
 @Service
@@ -46,7 +47,9 @@ public class TweetService {
 
     public WallDto getAllTweets() {
         return wallService.arrangeWall(
-                tweetRepository.findAll().stream()
+                StreamSupport.stream(tweetRepository.findAll().spliterator(), false)
+                        .toList()
+                        .stream()
                         .map(this::constructExtendedTweetDto)
                         .toList()
         );
@@ -95,7 +98,7 @@ public class TweetService {
     private void deleteThread(UUID threadId) {
         List<UUID> tweetIdsToDelete = tweetRepository.findAllByThreadId(threadId).stream().map(TweetEntity::getTweetId).toList();
         likeService.deleteAllByTweetIds(tweetIdsToDelete);
-        tweetRepository.deleteAllById(tweetIdsToDelete);
+        tweetRepository.deleteAll(tweetRepository.findAllById(tweetIdsToDelete));
     }
 
     private void deleteTweet(UUID id) {

@@ -3,20 +3,19 @@ package com.kacperKwiatkowski.tweetApp.mapper;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
-import com.kacperKwiatkowski.tweetApp.service.AvatarService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Base64;
 
 @AllArgsConstructor
 @Component
 public class UserMapper {
 
-    private final AvatarService avatarService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -24,7 +23,7 @@ public class UserMapper {
 
     public UserDto fromEntityToUserDto(UserEntity userToConvert) {
         UserDto convertedUser = modelMapper.map(userToConvert, UserDto.class);
-        convertedUser.setAvatar(Base64.getEncoder().encodeToString(userToConvert.getAvatar().getData()));
+        convertedUser.setAvatar(Base64.getEncoder().encodeToString(userToConvert.getAvatar()));
         return convertedUser;
     }
 
@@ -32,7 +31,12 @@ public class UserMapper {
         UserEntity convertedUser = modelMapper
                 .map(userToConvert, UserEntity.class);
 
-        convertedUser.setAvatar(avatarService.addAvatar(userToConvert.getAvatar()));
+        try {
+            convertedUser.setAvatar(userToConvert.getAvatar().getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         convertedUser.setPassword(passwordEncoder.encode(userToConvert.getPassword()));
 
         return convertedUser;

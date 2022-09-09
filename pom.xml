@@ -65,17 +65,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--        DATABASE DEPENDENCIES-->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-mongodb</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-
-
         <!--        SWAGGER-->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -138,6 +127,18 @@
             <artifactId>modelmapper</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <!--        AWS-->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.12.296</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.derjust</groupId>
+            <artifactId>spring-data-dynamodb</artifactId>
+            <version>5.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -151,7 +152,6 @@
                     <target>17</target>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

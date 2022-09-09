@@ -1,14 +1,16 @@
 package com.kacperKwiatkowski.tweetApp.repository;
 
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScanCount;
+import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.UUID;
 
-@Repository
-public interface UserRepository extends MongoRepository<UserEntity, UUID> {
+@EnableScan
+@EnableScanCount
+public interface UserRepository extends CrudRepository<UserEntity, UUID> {
 
     UserEntity findUserEntityByUsername(String username);
 

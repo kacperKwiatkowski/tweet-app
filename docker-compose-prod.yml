@@ -2,15 +2,15 @@ version: '3.9'
 
 services:
 
-  mongo-tweets:
-    image: mongo
-    container_name: mongo-tweets
+  dynamodb-tweets:
+    image:  amazon/dynamodb-local
+    container_name: dynamodb-tweets
     restart: always
+    volumes:
+      -  ./my-dynamodb-data:/home/dynamodblocal/data
     ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo_username
-      MONGO_INITDB_ROOT_PASSWORD: mongo_password
+      - "8000:8000"
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodblocal/data/"
 
   zookeeper-tweets:
     image: bitnami/zookeeper:latest
@@ -50,9 +50,14 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka-tweets:29092"
       MAIL_USERNAME: "${MAIL_USERNAME}"
       MAIL_PASSWORD: "${MAIL_PASSWORD}"
+      AWS_ACCESS_KEY: "${AWS_ACCESS_KEY}"
+      AWS_SECRET_KEY: "${AWS_SECRET_KEY}"
     ports:
       - "8080:8080"
     depends_on:
       - kafka-tweets
-      - mongo-tweets
+      - dynamodb-tweets
     restart: always
+
+    env_file:
+      - .env

@@ -1,14 +1,15 @@
 package com.kacperKwiatkowski.tweetApp.repository;
 
 import com.kacperKwiatkowski.tweetApp.model.LikeEntity;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScan;
+import org.socialsignin.spring.data.dynamodb.repository.EnableScanCount;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
 import java.util.UUID;
 
-@Repository
-public interface LikeRepository extends MongoRepository<LikeEntity, UUID> {
+@EnableScan
+@EnableScanCount
+public interface LikeRepository extends CrudRepository<LikeEntity, UUID> {
 
     void deleteByUsernameAndTweetId(String username, UUID tweetId);
 

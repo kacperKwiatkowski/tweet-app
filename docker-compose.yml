@@ -2,18 +2,6 @@ version: '3.9'
 
 services:
 
-  mongo-tweets:
-    image: mongo
-    container_name: mongo-tweets
-    restart: always
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongo_username
-      MONGO_INITDB_ROOT_PASSWORD: mongo_password
-    networks:
-      - tweets-network
-
   backend-tweet:
     image: backend-tweet
     container_name: backend-tweet
@@ -24,11 +12,8 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: "kafka-tweets:29092"
       MAIL_USERNAME: mock
       MAIL_PASSWORD: mock
-      DB_USERNAME: mongo_username
-      DB_PASSWORD: mongo_password
-      DB_NAME: mongo-tweets
-      DB_HOST: mongo-tweets
-      DB_PORT: 27017
+      AWS_ACCESS_KEY: ${AWS_ACCESS_KEY}
+      AWS_SECRET_KEY: ${AWS_SECRET_KEY}
     ports:
       - "8080:8080"
     depends_on:

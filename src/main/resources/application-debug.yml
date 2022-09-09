@@ -18,15 +18,6 @@ spring:
       max-file-size: 10MB
       max-request-size: 11MB
 
-  data:
-    mongodb:
-      authentication-database: admin
-      username: mongo_username
-      password: mongo_password
-      database: mongo-tweets
-      port: 27017
-      host: localhost
-
   kafka:
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -56,3 +47,10 @@ mail:
   username: ${MAIL_USERNAME}
   password: ${MAIL_PASSWORD}
 
+amazon:
+  dynamodb:
+    endpoint: http://localhost:8000
+    region: eu-central-1
+  aws:
+    accesskey: ${AWS_ACCESS_KEY}
+    secretkey: ${AWS_SECRET_KEY}

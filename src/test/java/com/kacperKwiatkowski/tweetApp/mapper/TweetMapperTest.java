@@ -16,7 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -62,7 +61,7 @@ class TweetMapperTest {
         assertEquals(tweetToMap.getTweetId(), mappedTweet.getTweetId());
         assertEquals(tweetToMap.getTitle(), mappedTweet.getTitle());
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
-        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime().format(DateTimeFormatter.ofPattern(PATTERN)));
+        assertEquals(tweetToMap.getPostDateTime(), mappedTweet.getPostDateTime());
         assertEquals(tweetToMap.getThreadId(), mappedTweet.getThreadId());
     }
 
@@ -79,7 +78,6 @@ class TweetMapperTest {
         assertEquals(tweetToMap.getMessage(), mappedTweet.getMessage());
     }
 
-    //FIXME fix this test
     @Test
     void shouldMapUpdateDtoToEntity() {
         // given

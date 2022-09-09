@@ -15,15 +15,6 @@ spring:
       max-file-size: 10MB
       max-request-size: 11MB
 
-  data:
-    mongodb:
-      authentication-database: admin
-      username: ${DB_USERNAME}
-      password: ${DB_PASSWORD}
-      database: ${DB_NAME}
-      port: ${DB_PORT}
-      host: ${DB_HOST}
-
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
@@ -38,3 +29,10 @@ mail:
   username: mock
   password: mock
 
+amazon:
+  dynamodb:
+    endpoint: https://dynamodb.eu-central-1.amazonaws.com
+    region: eu-central-1
+  aws:
+    accesskey: ${AWS_ACCESS_KEY}
+    secretkey: ${AWS_SECRET_KEY}

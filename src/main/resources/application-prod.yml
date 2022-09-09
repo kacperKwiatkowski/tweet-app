@@ -4,6 +4,9 @@ server:
 
 spring:
 
+  config:
+    import: file:env.properties
+
   main:
     banner-mode: off
 
@@ -14,15 +17,6 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 11MB
-
-  data:
-    mongodb:
-      authentication-database: admin
-      username: mongo_username
-      password: mongo_password
-      database: mongo-tweets
-      port: 27017
-      host: mongo-tweets
 
   kafka:
     consumer:
@@ -51,3 +45,10 @@ mail:
   username: mock
   password: mock
 
+amazon:
+  dynamodb:
+    endpoint: https://dynamodb.eu-central-1.amazonaws.com
+    region: eu-central-1
+  aws:
+    accesskey: ${AWS_ACCESS_KEY}
+    secretkey: ${AWS_SECRET_KEY}
