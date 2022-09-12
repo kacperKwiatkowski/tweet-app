@@ -8,10 +8,7 @@ services:
   - docker
 
 before_install:
-  - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  - unzip awscliv2.zip
-  - sudo ./aws/install
-  - ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+  - sudo apt install awscli
   - aws --version
   - chmod +x mvnw
   - docker-compose -f "docker-compose-test.yml" up -d
