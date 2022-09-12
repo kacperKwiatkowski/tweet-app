@@ -10,8 +10,9 @@ services:
 before_install:
   - sudo apt install awscli
   - aws --version
+  - aws configure set aws_access_key_id $AWS_ACCESS_ID
+  - aws configure set aws_secret_access_key $AWS_SECRET_ID
   - chmod +x mvnw
-  - docker-compose -f "docker-compose-test.yml" up -d
 
 script:
   - mvn clean test
