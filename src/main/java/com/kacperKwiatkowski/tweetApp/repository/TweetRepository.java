@@ -19,4 +19,6 @@ public interface TweetRepository extends CrudRepository<TweetEntity, UUID> {
     List<TweetEntity> findAllByThreadId(UUID threadId);
 
     boolean existsByThreadIdAndPostDateTimeBefore(UUID threadId, String postDateTime);
+
+    List<TweetEntity> findAllByThreadIdAndPostDateTimeBefore(UUID threadId, String postDateTime);
 }

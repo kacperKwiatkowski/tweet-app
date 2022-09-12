@@ -2,23 +2,23 @@ package com.kacperKwiatkowski.tweetApp.service;
 
 import com.kacperKwiatkowski.tweetApp.dto.auth.ForgotPasswordDto;
 import com.kacperKwiatkowski.tweetApp.mapper.AuthMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
+@Slf4j
+@AllArgsConstructor
 @Component
 public class MailService {
 
-    @Autowired
-    private JavaMailSender emailSender;
+    private final JavaMailSender emailSender;
+    private final AuthMapper authMapper;
 
-    @Autowired
-    private AuthMapper authMapper;
+    public void remindPassword(String jsonForgottenPasswordDto) {
 
-    public void remindPassword(String jsonRegisterUserDto) {
-
-        ForgotPasswordDto forgotPasswordDto = authMapper.mapStringToForgottenPasswordDto(jsonRegisterUserDto);
+        ForgotPasswordDto forgotPasswordDto = authMapper.mapStringToForgottenPasswordDto(jsonForgottenPasswordDto);
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("kacper.kwiatkowski.cognizant@gmail.com");

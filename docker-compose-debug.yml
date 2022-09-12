@@ -2,46 +2,6 @@ version: '3.9'
 
 services:
 
-  zookeeper-tweets:
-    image: bitnami/zookeeper:latest
-    container_name: zookeeper-tweets
-    environment:
-      ALLOW_ANONYMOUS_LOGIN: "yes"
-    ports:
-      - "2181:2181"
-    restart: "no"
-
-  kafka-tweets:
-    image: bitnami/kafka:latest
-    container_name: kafka-tweets
-    environment:
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: DOCKER_INTERNAL:PLAINTEXT,DOCKER_EXTERNAL:PLAINTEXT
-      KAFKA_LISTENERS: DOCKER_INTERNAL://:29092,DOCKER_EXTERNAL://:9092
-      KAFKA_ADVERTISED_LISTENERS: DOCKER_INTERNAL://kafka-tweets:29092,DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
-      KAFKA_INTER_BROKER_LISTENER_NAME: DOCKER_INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper-tweets:2181
-      KAFKA_BROKER_ID: 1
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      ALLOW_PLAINTEXT_LISTENER: "yes"
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
-    ports:
-      - "9092:9092"
-    restart: "no"
-    depends_on:
-      - zookeeper-tweets
-
-  kafdrop-tweets:
-    image: obsidiandynamics/kafdrop
-    container_name: kafdrop-tweets
-    environment:
-      KAFKA_BROKERCONNECT: "kafka-tweets:29092"
-    ports:
-      - "9000:9000"
-    restart: "no"
-    depends_on:
-      - kafka-tweets
-
   elasticsearch-tweets:
     image: elasticsearch:7.16.2
     container_name: elasticsearch-tweets

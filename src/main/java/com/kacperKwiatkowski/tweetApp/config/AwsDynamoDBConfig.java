@@ -12,24 +12,24 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableDynamoDBRepositories(basePackages = "com.kacperKwiatkowski.tweetApp.repository")
-public class DynamoDBConfig {
+public class AwsDynamoDBConfig {
 
     @Value("${amazon.dynamodb.endpoint}")
     private String amazonDynamoDBEndpoint;
 
-    @Value("${amazon.dynamodb.region}")
-    private String amazonDynamoDBRegion;
+    @Value("${amazon.region}")
+    private String amazonRegion;
 
-    @Value("${amazon.aws.accesskey}")
+    @Value("${aws.accessKeyId}")
     private String amazonAWSAccessKey;
 
-    @Value("${amazon.aws.secretkey}")
+    @Value("${aws.secretAccessKey}")
     private String amazonAWSSecretKey;
 
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
         return AmazonDynamoDBClientBuilder.standard()
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(amazonDynamoDBEndpoint, amazonDynamoDBRegion))
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(amazonDynamoDBEndpoint, amazonRegion))
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(amazonAWSAccessKey, amazonAWSSecretKey)))
                 .build();
     }

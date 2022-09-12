@@ -37,6 +37,10 @@ mail:
   username: mock
   password: mock
 
+time:
+  format:
+    pattern: 'dd.MM.yyyy HH:mm:ss:SSS'
+
 amazon:
   dynamodb:
     endpoint: https://dynamodb.eu-central-1.amazonaws.com

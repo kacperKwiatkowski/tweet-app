@@ -22,7 +22,6 @@ public class TweetService {
     private final TweetRepository tweetRepository;
     private final TweetValidatorFacade tweetValidatorFacade;
 
-    private final UserMapper userMapper;
     private final TweetMapper tweetMapper;
 
     private final LikeService likeService;
@@ -82,23 +81,10 @@ public class TweetService {
                         tweetMapper.fromUpdateDtoToEntity(tweetRepository.findById(tweetId).get(), tweetWithUpdatedData)));
     }
 
-
     public void deleteTweet(String username, UUID id) {
         tweetValidatorFacade.validateTweetDeleteAction(username, id);
 
-        TweetEntity tweetToDelete = tweetRepository.findById(id).get();
-
-        if(tweetRepository.existsByThreadIdAndPostDateTimeBefore(tweetToDelete.getThreadId(), tweetToDelete.getPostDateTime())){
-            deleteTweet(id);
-        } else {
-            deleteThread(tweetToDelete.getThreadId());
-        }
-    }
-
-    private void deleteThread(UUID threadId) {
-        List<UUID> tweetIdsToDelete = tweetRepository.findAllByThreadId(threadId).stream().map(TweetEntity::getTweetId).toList();
-        likeService.deleteAllByTweetIds(tweetIdsToDelete);
-        tweetRepository.deleteAll(tweetRepository.findAllById(tweetIdsToDelete));
+        deleteTweet(id);
     }
 
     private void deleteTweet(UUID id) {

@@ -1,8 +1,11 @@
 package com.kacperKwiatkowski.tweetApp.service;
 
+import com.google.gson.Gson;
+import com.kacperKwiatkowski.tweetApp.dto.auth.ForgotPasswordDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.mapper.UserMapper;
+import com.kacperKwiatkowski.tweetApp.message.publisher.SqsPublisher;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.validator.UserValidatorFacade;
@@ -23,9 +26,8 @@ public class AuthService {
     private final UserValidatorFacade userValidatorFacade;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final SqsPublisher sqsMessageProducer;
 
-//    private KafkaTemplate<String, String> kafkaTemplate;
-//
 public UserDto registerUser(RegisterUserDto userToRegister) {
     userValidatorFacade.validateUserRegisterAction(userToRegister);
 
@@ -46,7 +48,7 @@ public UserDto registerUser(RegisterUserDto userToRegister) {
         userToRemindPassword.setPassword(passwordEncoder.encode(tempPassword));
         userRepository.save(userToRemindPassword);
 
-//        kafkaTemplate.send(TOPIC_FORGOTTEN_PASSWORD, new Gson().toJson(new ForgotPasswordDto(username, tempPassword)));
+        sqsMessageProducer.send(new Gson().toJson(new ForgotPasswordDto(username, tempPassword)));
     }
 
     public UserDto getLoggedInUser() {

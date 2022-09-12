@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.format.DateTimeFormatter;
@@ -23,9 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @RunWith(SpringRunner.class)
 class TweetMapperTest {
 
-    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
-
     private static final String USERNAME = "USERNAME";
+
+    @Value("${time.format.pattern}")
+    private static String pattern = "dd.MM.yyyy HH:mm:ss:SSS";
 
     @Spy
     ModelMapper modelMapper = new ModelMapper();

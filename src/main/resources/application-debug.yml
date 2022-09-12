@@ -40,17 +40,24 @@ application:
     token-prefix: Bearer
     token-expiration-after-days: 14
 
-topic:
-  forgottenPassword: user.password.forgotten
-
 mail:
   username: ${MAIL_USERNAME}
   password: ${MAIL_PASSWORD}
 
+topic:
+  forgottenPassword: forgottenPassword
+
+time:
+  format:
+    pattern: 'dd.MM.yyyy HH:mm:ss:SSS'
+
 amazon:
+  region: eu-central-1
   dynamodb:
-    endpoint: http://localhost:8000
-    region: eu-central-1
-  aws:
-    accesskey: ${AWS_ACCESS_KEY}
-    secretkey: ${AWS_SECRET_KEY}
+    endpoint: https://dynamodb.eu-central-1.amazonaws.com
+  sqs:
+    endpoint: https://sqs.eu-central-1.amazonaws.com/195077249767/
+
+aws:
+  accessKeyId: ${AWS_ACCESS_KEY}
+  secretAccessKey: ${AWS_SECRET_KEY}

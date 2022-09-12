@@ -1,6 +1,7 @@
 package com.kacperKwiatkowski.tweetApp.dto.tweet;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +14,8 @@ import java.util.UUID;
 @Setter
 public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
-    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
+    @Value("${time.format.pattern}")
+    private static String pattern = "dd.MM.yyyy HH:mm:ss:SSS";
 
     private UUID tweetId;
     private String username;
@@ -28,10 +30,10 @@ public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
     @Override
     public int compareTo(ExtendedTweetDto o) {
-        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN)))) {
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(pattern)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(pattern)))) {
             return 1;
         }
-        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN)))) {
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(pattern)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(pattern)))) {
             return -1;
         } else return 0;
     }
