@@ -36,7 +36,7 @@ public class TweetAppApplication {
     private static long staticTitleCount = 1;
     private static long staticMessageCount = 1;
 
-    private static final String PATTERN = "dd.MM.yyyy HH:mm:ss:SSS";
+    private static final String PATTERN = "dd/MM/yyyy HH/mm/ss/SSS";
 
     public static void main(String[] args) {
         SpringApplication.run(TweetAppApplication.class, args);

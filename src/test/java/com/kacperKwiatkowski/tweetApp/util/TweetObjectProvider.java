@@ -5,7 +5,6 @@ import com.kacperKwiatkowski.tweetApp.dto.tweet.ExtendedTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.ReplyTweetDto;
 import com.kacperKwiatkowski.tweetApp.dto.tweet.UpdateTweetDto;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,8 +12,7 @@ import java.util.UUID;
 
 public class TweetObjectProvider {
 
-    @Value("${time.format.pattern}")
-    private static String pattern = "dd.MM.yyyy HH:mm:ss:SSS";
+    private static String PATTERN = "dd/MM/yyyy HH/mm/ss/SSS";
 
     public static TweetEntity provideTweetEntity() {
 
@@ -24,7 +22,7 @@ public class TweetObjectProvider {
                 .tweetId(UUID.randomUUID())
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
-                .postDateTime(LocalDateTime.parse(LocalDateTime.now().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).format(DateTimeFormatter.ofPattern(pattern)))
+                .postDateTime(LocalDateTime.parse(LocalDateTime.now().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).format(DateTimeFormatter.ofPattern(PATTERN)))
                 .threadId(UUID.randomUUID())
                 .build();
     }
@@ -49,7 +47,7 @@ public class TweetObjectProvider {
                 .title(randomFieldIndex)
                 .message(randomFieldIndex)
                 .likeCount(Long.MIN_VALUE)
-                .postDateTime(LocalDateTime.parse(LocalDateTime.now().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).format(DateTimeFormatter.ofPattern(pattern)))
+                .postDateTime(LocalDateTime.parse(LocalDateTime.now().toString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME).format(DateTimeFormatter.ofPattern(PATTERN)))
                 .threadId(UUID.randomUUID())
                 .build();
     }

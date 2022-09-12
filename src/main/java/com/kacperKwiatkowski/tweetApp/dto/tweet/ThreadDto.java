@@ -16,8 +16,7 @@ import java.util.List;
 @Setter
 public class ThreadDto implements Comparable<ThreadDto> {
 
-    @Value("${time.format.pattern}")
-    private static String pattern = "dd.MM.yyyy HH:mm:ss:SSS";
+    private static final String PATTERN = "dd/MM/yyyy HH/mm/ss/SSS";
 
     private List<ExtendedTweetDto> tweets;
 
@@ -36,9 +35,9 @@ public class ThreadDto implements Comparable<ThreadDto> {
 
     @Override
     public int compareTo(ThreadDto o) {
-        if (LocalDateTime.parse(this.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(pattern)).isBefore(LocalDateTime.parse(o.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(pattern))))
+        if (LocalDateTime.parse(this.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN))))
             return 1;
-        if (LocalDateTime.parse(this.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(pattern)).isAfter(LocalDateTime.parse(o.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(pattern))))
+        if (LocalDateTime.parse(this.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.getTweets().get(0).getPostDateTime(), DateTimeFormatter.ofPattern(PATTERN))))
             return -1;
         else return 0;
     }

@@ -26,9 +26,6 @@ class TweetMapperTest {
 
     private static final String USERNAME = "USERNAME";
 
-    @Value("${time.format.pattern}")
-    private static String pattern = "dd.MM.yyyy HH:mm:ss:SSS";
-
     @Spy
     ModelMapper modelMapper = new ModelMapper();
 

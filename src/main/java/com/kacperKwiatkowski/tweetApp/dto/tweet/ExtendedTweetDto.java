@@ -14,8 +14,8 @@ import java.util.UUID;
 @Setter
 public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
-    @Value("${time.format.pattern}")
-    private static String pattern = "dd.MM.yyyy HH:mm:ss:SSS";
+    private static String PATTERN = "dd/MM/yyyy HH/mm/ss/SSS";
+
 
     private UUID tweetId;
     private String username;
@@ -30,10 +30,10 @@ public class ExtendedTweetDto implements Comparable<ExtendedTweetDto> {
 
     @Override
     public int compareTo(ExtendedTweetDto o) {
-        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(pattern)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(pattern)))) {
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isAfter(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN)))) {
             return 1;
         }
-        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(pattern)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(pattern)))) {
+        if (LocalDateTime.parse(this.postDateTime, DateTimeFormatter.ofPattern(PATTERN)).isBefore(LocalDateTime.parse(o.postDateTime, DateTimeFormatter.ofPattern(PATTERN)))) {
             return -1;
         } else return 0;
     }
