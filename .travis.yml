@@ -18,3 +18,6 @@ after_success:
   - docker build -t kacperkwiatkowski/backend-tweet ./
   - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_ID" --password-stdin
   - docker push kacperkwiatkowski/backend-tweet
+  - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 195077249767.dkr.ecr.eu-central-1.amazonaws.com
+  - docker tag kacperkwiatkowski/backend-tweet 195077249767.dkr.ecr.eu-central-1.amazonaws.com/kacperkwiatkowski/backend-tweet
+  - docker push 195077249767.dkr.ecr.eu-central-1.amazonaws.com/kacperkwiatkowski/backend-tweet

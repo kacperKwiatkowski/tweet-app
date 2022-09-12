@@ -6,6 +6,7 @@ import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedUserValidationE
 import com.kacperKwiatkowski.tweetApp.validator.ValidationReport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -69,5 +70,12 @@ public class ControllerAdvisor {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(AVATAR_PARSE_FAILURE_MESSAGE);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<String> usernameNotFoundExceptionHandler(UsernameNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(e.getMessage());
     }
 }
