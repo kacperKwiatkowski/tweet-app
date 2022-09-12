@@ -24,6 +24,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -60,6 +61,13 @@ class TweetControllerIntegrationTest {
     void cleanUp() {
         userRepository.deleteAll();
         tweetRepository.deleteAll();
+    }
+
+    @BeforeEach
+    public void setUp() {
+        webTestClient = webTestClient.mutate()
+                .responseTimeout(Duration.ofMillis(30000))
+                .build();
     }
 
     @Test
