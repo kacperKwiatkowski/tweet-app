@@ -14,6 +14,6 @@ RUN mkdir /app
 
 COPY --from=build /project/target/tweetApp-0.0.1-SNAPSHOT.jar /app/tweetApp-0.0.1-SNAPSHOT.jar
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD java $JAVA_OPTS -jar /app/tweetApp-0.0.1-SNAPSHOT.jar
