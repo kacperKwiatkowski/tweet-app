@@ -17,6 +17,7 @@ before_install:
 after_success:
   - aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 195077249767.dkr.ecr.eu-central-1.amazonaws.com
   - docker build -t kacperkwiatkowski/backend-tweet .
+  - echo $DOCKER_PASSWORD | docker login -u "$DOCKER_ID" --password-stdin
   - docker push kacperkwiatkowski/backend-tweet
   - docker tag kacperkwiatkowski/backend-tweet:latest 195077249767.dkr.ecr.eu-central-1.amazonaws.com/kacperkwiatkowski/backend-tweet:latest
   - docker push 195077249767.dkr.ecr.eu-central-1.amazonaws.com/kacperkwiatkowski/backend-tweet:latest
