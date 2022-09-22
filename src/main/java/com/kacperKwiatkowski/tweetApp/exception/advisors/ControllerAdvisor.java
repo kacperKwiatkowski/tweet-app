@@ -3,7 +3,7 @@ package com.kacperKwiatkowski.tweetApp.exception.advisors;
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.AvatarParseException;
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedTweetValidationException;
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedUserValidationException;
-import com.kacperKwiatkowski.tweetApp.validator.ValidationReport;
+import com.kacperKwiatkowski.tweetApp.validator.common.ValidationReport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

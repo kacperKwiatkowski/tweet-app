@@ -1,4 +1,4 @@
-package com.kacperKwiatkowski.tweetApp.validator;
+package com.kacperKwiatkowski.tweetApp.validator.tweet;
 
 import com.kacperKwiatkowski.tweetApp.repository.LikeRepository;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;

@@ -1,6 +1,8 @@
-package com.kacperKwiatkowski.tweetApp.validator;
+package com.kacperKwiatkowski.tweetApp.validator.tweet;
 
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedTweetValidationException;
+import com.kacperKwiatkowski.tweetApp.validator.user.UserValidator;
+import com.kacperKwiatkowski.tweetApp.validator.common.ValidatorUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

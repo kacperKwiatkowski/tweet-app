@@ -1,6 +1,10 @@
 package com.kacperKwiatkowski.tweetApp.validator;
 
 import com.kacperKwiatkowski.tweetApp.exception.exceptions.FailedTweetValidationException;
+import com.kacperKwiatkowski.tweetApp.validator.common.ValidatorUtil;
+import com.kacperKwiatkowski.tweetApp.validator.tweet.TweetValidator;
+import com.kacperKwiatkowski.tweetApp.validator.tweet.TweetValidatorFacade;
+import com.kacperKwiatkowski.tweetApp.validator.user.UserValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

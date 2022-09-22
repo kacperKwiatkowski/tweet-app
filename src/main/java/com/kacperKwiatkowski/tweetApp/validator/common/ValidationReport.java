@@ -1,4 +1,4 @@
-package com.kacperKwiatkowski.tweetApp.validator;
+package com.kacperKwiatkowski.tweetApp.validator.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

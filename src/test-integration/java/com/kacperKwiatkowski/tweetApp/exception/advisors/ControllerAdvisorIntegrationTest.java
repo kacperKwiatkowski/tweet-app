@@ -8,7 +8,7 @@ import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.util.JwtTokenProvider;
 import com.kacperKwiatkowski.tweetApp.util.TweetObjectProvider;
 import com.kacperKwiatkowski.tweetApp.util.UserObjectProvider;
-import com.kacperKwiatkowski.tweetApp.validator.ValidationReport;
+import com.kacperKwiatkowski.tweetApp.validator.common.ValidationReport;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

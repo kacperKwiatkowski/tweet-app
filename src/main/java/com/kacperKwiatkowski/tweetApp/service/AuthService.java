@@ -8,7 +8,7 @@ import com.kacperKwiatkowski.tweetApp.mapper.UserMapper;
 import com.kacperKwiatkowski.tweetApp.message.publisher.SqsPublisher;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
-import com.kacperKwiatkowski.tweetApp.validator.UserValidatorFacade;
+import com.kacperKwiatkowski.tweetApp.validator.user.UserValidatorFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;

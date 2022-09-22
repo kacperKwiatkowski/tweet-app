@@ -4,6 +4,9 @@ server:
 
 spring:
 
+  config:
+    import: file:env.properties
+
   codec:
     max-in-memory-size: 10MB
 

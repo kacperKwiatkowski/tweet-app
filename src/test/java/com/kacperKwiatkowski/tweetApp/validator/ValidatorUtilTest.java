@@ -1,5 +1,6 @@
 package com.kacperKwiatkowski.tweetApp.validator;
 
+import com.kacperKwiatkowski.tweetApp.validator.common.ValidatorUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

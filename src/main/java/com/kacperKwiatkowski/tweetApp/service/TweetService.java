@@ -2,11 +2,10 @@ package com.kacperKwiatkowski.tweetApp.service;
 
 import com.kacperKwiatkowski.tweetApp.dto.tweet.*;
 import com.kacperKwiatkowski.tweetApp.mapper.TweetMapper;
-import com.kacperKwiatkowski.tweetApp.mapper.UserMapper;
 import com.kacperKwiatkowski.tweetApp.model.TweetEntity;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
-import com.kacperKwiatkowski.tweetApp.validator.TweetValidatorFacade;
+import com.kacperKwiatkowski.tweetApp.validator.tweet.TweetValidatorFacade;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -28,7 +28,6 @@ public class TweetMapper {
         extendedTweetToMap.setLastName(userToConvert.getLastName());
         extendedTweetToMap.setUsername(userToConvert.getUsername());
         extendedTweetToMap.setLikeCount(likeCount);
-        extendedTweetToMap.setAvatar(Base64.getEncoder().encodeToString(userToConvert.getAvatar()));
         return extendedTweetToMap;
     }
 
