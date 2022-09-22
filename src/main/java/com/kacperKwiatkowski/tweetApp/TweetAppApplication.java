@@ -5,6 +5,7 @@ import com.kacperKwiatkowski.tweetApp.model.UserEntity;
 import com.kacperKwiatkowski.tweetApp.repository.TweetRepository;
 import com.kacperKwiatkowski.tweetApp.repository.UserRepository;
 import com.kacperKwiatkowski.tweetApp.security.role.RoleType;
+import com.kacperKwiatkowski.tweetApp.service.ImageService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -28,9 +29,13 @@ import java.util.UUID;
 @Configuration
 public class TweetAppApplication {
 
+    public static final int HEIGHT = 100;
+    public static final int WIDTH = 100;
+
     private final UserRepository userRepository;
     private final TweetRepository tweetRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ImageService imageService;
 
     private static long staticDaysMinusCount = 10;
     private static long staticTitleCount = 1;
@@ -56,7 +61,7 @@ public class TweetAppApplication {
                             .email("adam@gmail.com")
                             .username("4d4m")
                             .password(passwordEncoder.encode("password1"))
-                            .avatar(getBinaryImage("https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=740"))
+                            .avatar(imageService.scaleImage(getBinaryImage("https://img.freepik.com/premium-vector/man-avatar-profile-round-icon_24640-14044.jpg?w=740"), WIDTH, HEIGHT))
                             .roleType(RoleType.USER.name())
                             .build()
             );
@@ -69,7 +74,7 @@ public class TweetAppApplication {
                             .email("maria@gmail.com")
                             .username("m4ria")
                             .password(passwordEncoder.encode("password2"))
-                            .avatar(getBinaryImage("https://img.freepik.com/premium-vector/woman-avatar-profile-round-icon_24640-14047.jpg?w=740"))
+                            .avatar(imageService.scaleImage(getBinaryImage("https://img.freepik.com/premium-vector/woman-avatar-profile-round-icon_24640-14047.jpg?w=740"), WIDTH, HEIGHT))
                             .roleType(RoleType.USER.name())
                             .build()
             );
@@ -81,7 +86,7 @@ public class TweetAppApplication {
                             .email("bozena@gmail.com")
                             .username("b0zen4")
                             .password(passwordEncoder.encode("password3"))
-                            .avatar(getBinaryImage("https://img.freepik.com/premium-vector/woman-avatar-profile-round-icon_24640-14042.jpg?w=740"))
+                            .avatar(imageService.scaleImage(getBinaryImage("https://img.freepik.com/premium-vector/woman-avatar-profile-round-icon_24640-14042.jpg?w=740"), WIDTH, HEIGHT))
                             .roleType(RoleType.USER.name())
                             .build()
             );

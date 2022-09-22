@@ -3,6 +3,7 @@ package com.kacperKwiatkowski.tweetApp.mapper;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
+import com.kacperKwiatkowski.tweetApp.service.ImageService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,11 @@ import java.util.Base64;
 @Component
 public class UserMapper {
 
+    public static final int HEIGHT = 100;
+    public static final int WIDTH = 100;
+
     private final PasswordEncoder passwordEncoder;
+    private final ImageService imageService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -32,7 +37,7 @@ public class UserMapper {
                 .map(userToConvert, UserEntity.class);
 
         try {
-            convertedUser.setAvatar(userToConvert.getAvatar().getBytes());
+            convertedUser.setAvatar(imageService.scaleImage(userToConvert.getAvatar().getBytes(), WIDTH, HEIGHT));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
