@@ -4,6 +4,7 @@ package com.kacperKwiatkowski.tweetApp.mapper;
 import com.kacperKwiatkowski.tweetApp.dto.user.RegisterUserDto;
 import com.kacperKwiatkowski.tweetApp.dto.user.UserDto;
 import com.kacperKwiatkowski.tweetApp.model.UserEntity;
+import com.kacperKwiatkowski.tweetApp.service.ImageService;
 import com.kacperKwiatkowski.tweetApp.util.UserObjectProvider;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +32,8 @@ class UserMapperTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+    @Mock
+    private ImageService imageService;
 
     @InjectMocks
     private UserMapper userMapper;
@@ -56,6 +60,7 @@ class UserMapperTest {
         // given
         RegisterUserDto userToMap = UserObjectProvider.provideRegisterUserDto();
         when(passwordEncoder.encode(any())).thenReturn(userToMap.getPassword());
+        when(imageService.scaleImage(any(), anyInt(), anyInt())).thenReturn(new byte[]{});
 
         // when
         UserEntity mappedUser = userMapper.fromRegisterUserDtoToEntity(userToMap);
