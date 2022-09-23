@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /api/v.1.0/tweets
+    connection-timeout: 5s
 
 spring:
 
@@ -26,8 +27,8 @@ application:
     token-expiration-after-days: 14
 
 mail:
-  username: mock
-  password: mock
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
 
 topic:
   forgottenPassword: forgottenPassword
